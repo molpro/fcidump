@@ -1,0 +1,8 @@
+*.d
+*.xml
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CMakeLists.txt.user
+build/
