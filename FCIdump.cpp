@@ -144,7 +144,31 @@ FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, doub
   return result;
 }
 
+FCIdump* dump;
+
 void FCIdumpInitialise(char* filename)
 {
   printf("Initialise FCIDUMP from file %s\n",filename);
+  dump = new FCIdump(std::string(filename));
+}
+
+void FCIdumpParameter(char* key, int* values)
+{
+  std::vector<int> vals = dump->parameter(std::string(key));
+  for (size_t i=0; i<vals.size(); i++)
+    values[i]=vals[i];
+}
+
+void FCIdumpRewind()
+{
+  dump->rewind();
+}
+
+int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value)
+{
+  int ii, jj, kk, ll;
+  double vv;
+  FCIdump::integralType type = dump->nextIntegral(ii, jj, kk, ll, vv);
+  *i = ii; *j = jj; *k = kk; *l = ll; *value = vv;
+  return (int) type;
 }

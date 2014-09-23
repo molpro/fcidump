@@ -4,9 +4,25 @@
 #include <string>
 #include <vector>
 #include <fstream>
+/**
+ @mainpage FCIdump access through C++, C and Fortran
+
+ @section Introduction
+ This is a C++ class, together with non-object-oriented C and Fortran 90 bindings, that implement access
+ to an FCIDUMP file as produced by the Full CI code (Computer Physics Communications
+Volume 54, Issue 1, April 1989, Pages 75–83,
+<a href="http://dx.doi.org/10.1016/0010-4655(89)90033-7">
+doi:10.1016/0010-4655(89)90033-7</a>;
+<a href="http://bitbucket.org:pjknowles/fci">
+http://bitbucket.org/pjknowles/fci</a>),
+as well as <a href="http://www.molpro.net/">Molpro</a> via its fci;dump facility
+
+@author Peter Knowles
+
+ */
 
 /*!
- * \brief Class that provides access to FCIdump files
+ * \brief C++ class that provides access to FCIdump files
  */
 class FCIdump
 {
@@ -83,13 +99,36 @@ private:
 };
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*!
- * \brief initialise access to an FCIDUMP
+ * \brief C binding of FCIdump: initialise access to an FCIDUMP
  * \param filename The file containing the FCIDUMP data
  */
-#ifdef __cplusplus
-extern "C"
-#endif
 void FCIdumpInitialise(char* filename);
+/*!
+ * \brief C binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
+ * \param key The name of the parameter
+ * \param values  The result as a vector of integers.
+ */
+void FCIdumpParameter(char* key, int* values);
+/*!
+ * \brief C binding of FCIdump: Position the file so that the next call to nextIntegral will deliver the first integral
+ */
+void FCIdumpRewind();
+  /*!
+ * \brief C binding of FCIdump: Read the next integral from the file
+   * \param i orbital label (zero indicates not 1-electron or 2-electron)
+   * \param j orbital label
+   * \param k orbital label(zero indicates not 2-electron)
+   * \param l orbital label
+   * \param value numerical value of the integral
+   * \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
+   */
+int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
+#ifdef __cplusplus
+}
+#endif
 
 #endif // FCIDUMP_H
