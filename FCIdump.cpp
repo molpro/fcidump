@@ -172,3 +172,12 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value)
   *i = ii; *j = jj; *k = kk; *l = ll; *value = vv;
   return (int) type;
 }
+
+void FCIdumpAddParameter(char *key, int values[])
+{
+  std::string keys(key);
+  std::vector<int> valuess;
+  for (size_t i=0; values[i]; i++)
+    valuess.push_back(values[i]);
+  dump->addParameter(keys,valuess);
+}

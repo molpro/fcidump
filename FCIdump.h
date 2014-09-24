@@ -127,6 +127,12 @@ void FCIdumpRewind();
    * \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
    */
 int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
+/*!
+ * \brief addParameter C binding of FCIdump: add a parameter
+ * \param key key
+ * \param values values
+ */
+void FCIdumpAddParameter(char* key, int values[]);
 #ifdef __cplusplus
 }
 #endif
