@@ -147,7 +147,7 @@ void FCIdump::rewind()
 #include <iomanip>
 bool FCIdump::write(std::string filename, fileType type)
 {
-  std::ofstream s(filename);
+  std::ofstream s(filename.c_str());
   if ( (s.rdstate() & std::ifstream::failbit ) != 0 ) {
     std::cout << "FCIdump::write failed to open "<<filename<<std::endl;
     s.close();
@@ -215,6 +215,7 @@ void FCIdumpInitialise(char* filename)
   dump = new FCIdump(std::string(filename));
 }
 
+#include <string.h>
 void FCIdumpParameterS(char* key, char *value)
 {
   std::vector<std::string> vals(1);
@@ -226,18 +227,18 @@ void FCIdumpParameterS(char* key, char *value)
 void FCIdumpParameterI(char* key, int* values, int n)
 {
   std::vector<int> vals(n);
-  for (int i=0; i<n; i++) vals[i]=values[i];
+  for (size_t i=0; i<(size_t)n; i++) vals[i]=values[i];
   vals = dump->parameter(std::string(key), vals);
-  for (int i=0; i<vals.size() && i < n; i++)
+  for (size_t i=0; i<vals.size() && i < (size_t)n; i++)
     values[i]=vals[i];
 }
 
 void FCIdumpParameterF(char* key, double* values, int n)
 {
   std::vector<double> vals(n);
-  for (int i=0; i<n; i++) vals[i]=values[i];
+  for (size_t i=0; i<(size_t)n; i++) vals[i]=values[i];
   vals = dump->parameter(std::string(key), vals);
-  for (int i=0; i<vals.size() && i < n; i++)
+  for (size_t i=0; i<vals.size() && i < (size_t)n; i++)
     values[i]=vals[i];
 }
 
@@ -266,7 +267,7 @@ void FCIdumpAddParameterI(char *key, int values[], int n)
 {
   std::string keys(key);
   std::vector<int> valuess;
-  for (size_t i=0; i<n; i++)
+  for (size_t i=0; i<(size_t)n; i++)
     valuess.push_back(values[i]);
   dump->addParameter(keys,valuess);
 }
@@ -275,7 +276,7 @@ void FCIdumpAddParameterF(char *key, double values[], int n)
 {
   std::string keys(key);
   std::vector<double> valuess;
-  for (size_t i=0; i<n; i++)
+  for (size_t i=0; i<(size_t)n; i++)
     valuess.push_back(values[i]);
   dump->addParameter(keys,valuess);
 }

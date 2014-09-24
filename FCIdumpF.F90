@@ -94,7 +94,7 @@ CONTAINS
   CHARACTER(kind=C_Char,len=1024) :: c_key
   INTEGER(kind=C_INT), DIMENSION(LBOUND(values,1):UBOUND(values,1)) :: c_values
   c_key=TRIM(key)//C_NULL_CHAR
-  c_values = values
+  c_values = INT(values,kind=C_INT)
   CALL FCIDumpParameterI(c_key,c_values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
   values = c_values
  END SUBROUTINE FCIdumpFParameterI
@@ -153,7 +153,7 @@ CONTAINS
   CHARACTER(kind=C_Char,len=1024) :: c_key
   INTEGER(kind=C_INT), DIMENSION(LBOUND(values,1):UBOUND(values,1)) :: c_values
   c_key=TRIM(key)//C_NULL_CHAR
-  c_values = values
+  c_values = INT(values,kind=C_INT)
   CALL FCIDumpAddParameterI(c_key,c_values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
  END SUBROUTINE FCIdumpFAddParameterI
  
@@ -176,13 +176,13 @@ CONTAINS
   LOGICAL :: FCIdumpFWrite
   CHARACTER(*), INTENT(in) :: filename
   INTEGER, INTENT(in), OPTIONAL :: typf
-  INTEGER :: typ
+  INTEGER(kind=C_INT) :: typ
   CHARACTER(kind=C_CHAR, len=1024) :: c_filename
   c_filename=TRIM(filename)//C_NULL_CHAR
   FCIDumpFWrite = .FALSE.
-  typ = 0
-  IF (PRESENT(typf)) typ=typf
-  IF ( FCIDumpWrite(c_filename, typ) .EQ.1) FCIDumpFWrite = .TRUE.
+  typ = INT(0,kind=C_INT)
+  IF (PRESENT(typf)) typ=INT(typf,kind=C_INT)
+  IF ( FCIDumpWrite(c_filename, typ) .EQ.INT(1,kind=C_INT)) FCIDumpFWrite = .TRUE.
   RETURN
  END FUNCTION FCIdumpFWrite
 END MODULE FCIdumpF
