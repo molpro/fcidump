@@ -164,7 +164,7 @@ void FCIdumpRewind();
    */
 int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
 /*!
- * \brief addParameter C binding of FCIdump: add a parameter
+ * \brief C binding of FCIdump: add a parameter
  * \param key key
  * \param values values
  */
