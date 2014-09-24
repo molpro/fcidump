@@ -150,7 +150,7 @@ void FCIdumpParameterI(char* key, int* values, int n);
  */
 void FCIdumpParameterF(char* key, double* values, int n);
 /*!
- * \brief C binding of FCIdump: Position the file so that the next call to nextIntegral will deliver the first integral
+ * \brief C binding of FCIdump: Position the file so that the next call to FCIdumpNextIntegral will deliver the first integral
  */
 void FCIdumpRewind();
   /*!
