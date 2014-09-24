@@ -105,6 +105,16 @@ void FCIdump::addParameter(const std::string& key, const std::vector<int>& value
   }
   addParameter(key,valuess);
 }
+void FCIdump::addParameter(const std::string& key, const std::vector<double>& values)
+{
+  std::vector<std::string> valuess;
+  for (std::vector<double>::const_iterator v=values.begin(); v!=values.end(); v++) {
+    std::ostringstream ss;
+    ss << *v;
+    valuess.push_back(ss.str());
+  }
+  addParameter(key,valuess);
+}
 void FCIdump::addParameter(const std::string &key, const std::string &value)
 {
   addParameter(key,std::vector<std::string>(1,value));
@@ -112,6 +122,10 @@ void FCIdump::addParameter(const std::string &key, const std::string &value)
 void FCIdump::addParameter(const std::string &key, const int &value)
 {
   addParameter(key,std::vector<int>(1,value));
+}
+void FCIdump::addParameter(const std::string &key, const double &value)
+{
+  addParameter(key,std::vector<double>(1,value));
 }
 
 void FCIdump::rewind()
@@ -201,13 +215,12 @@ void FCIdumpInitialise(char* filename)
   dump = new FCIdump(std::string(filename));
 }
 
-void FCIdumpParameterS(char* key, char** values, int n)
+void FCIdumpParameterS(char* key, char *value)
 {
-  std::vector<std::string> vals(n);
-  for (int i=0; i<n; i++) vals[i]=values[i];
+  std::vector<std::string> vals(1);
+  vals[0]=value;
   vals = dump->parameter(std::string(key), vals);
-  for (int i=0; i<vals.size() && i < n; i++)
-    values[i]=strdup(vals[i].c_str());
+  if (vals.size()>0) value=strdup(vals[0].c_str());
 }
 
 void FCIdumpParameterI(char* key, int* values, int n)
@@ -242,11 +255,32 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value)
   return (int) type;
 }
 
-void FCIdumpAddParameter(char *key, int values[])
+void FCIdumpAddParameterS(char *key, char *value)
+{
+  std::string keys(key);
+  std::vector<std::string> valuess(1,value);
+  dump->addParameter(keys,valuess);
+}
+
+void FCIdumpAddParameterI(char *key, int values[], int n)
 {
   std::string keys(key);
   std::vector<int> valuess;
-  for (size_t i=0; values[i]; i++)
+  for (size_t i=0; i<n; i++)
     valuess.push_back(values[i]);
   dump->addParameter(keys,valuess);
+}
+
+void FCIdumpAddParameterF(char *key, double values[], int n)
+{
+  std::string keys(key);
+  std::vector<double> valuess;
+  for (size_t i=0; i<n; i++)
+    valuess.push_back(values[i]);
+  dump->addParameter(keys,valuess);
+}
+
+int FCIdumpWrite(char* filename, int type)
+{
+  return dump->write(std::string(filename),(FCIdump::fileType) type) ? 1 : 0 ;
 }

@@ -34,7 +34,7 @@ public:
   FCIdump(std::string filename="FCIDUMP");
 
   /*!
-     * \brief parameter Obtain an integer namelist parameter from the FCIDUMP data.
+     * \brief Obtain an integer namelist parameter from the FCIDUMP data.
      * \param key The name of the parameter
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
@@ -42,7 +42,7 @@ public:
   std::vector<int> parameter(std::string key, std::vector<int> def=std::vector<int>(1,0));
 
   /*!
-     * \brief parameter Obtain a real namelist parameter from the FCIDUMP data.
+     * \brief Obtain a real namelist parameter from the FCIDUMP data.
      * \param key The name of the parameter
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
@@ -50,49 +50,65 @@ public:
   std::vector<double> parameter(std::string key, std::vector<double> def);
 
   /*!
-     * \brief parameter Obtain a string namelist parameter from the FCIDUMP data.
+     * \brief Obtain a string namelist parameter from the FCIDUMP data.
      * \param key The name of the parameter
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
   std::vector<std::string> parameter(std::string key, std::vector<std::string> def);
   /*!
-   * \brief addParameter add a parameter with array values
+   * \brief Add a parameter with array values
    * \param key key
    * \param values values
    */
   void addParameter(const std::string& key, const std::vector<std::string>& values);
 
   /*!
-   * \brief addParameter add a parameter with array values
+   * \brief Add a parameter with array values
    * \param key key
    * \param values values
    */
   void addParameter(const std::string& key, const std::vector<int>& values);
 
   /*!
-   * \brief addParameter add a parameter with a scalar value
+   * \brief Add a parameter with array values
+   * \param key key
+   * \param values values
+   */
+  void addParameter(const std::string& key, const std::vector<double>& values);
+
+  /*!
+   * \brief Add a parameter with a scalar value
    * \param key key
    * \param value value
    */
   void addParameter(const std::string& key, const std::string& value);
 
   /*!
-   * \brief addParameter add a parameter with a scalar value
+   * \brief Add a parameter with a scalar value
    * \param key key
    * \param value value
    */
   void addParameter(const std::string& key, const int& value);
 
+  /*!
+   * \brief Add a parameter with a scalar value
+   * \param key key
+   * \param value value
+   */
+  void addParameter(const std::string& key, const double& value);
+
    /*!
-     * \brief fileName The file containing the FCIDUMP data
+     * \brief The file containing the FCIDUMP data
      */
   std::string fileName();
 
   /*!
-   * \brief the possible external file formats
+   * \brief The possible external file formats
     */
-  typedef enum { FileFormatted } fileType;
+  typedef enum {
+    FileFormatted ///< formatted ASCII file
+  } fileType;
 
   /*!
    * \brief Write the object to an external file
@@ -103,9 +119,18 @@ public:
   bool write(std::string filename, fileType type=FileFormatted);
 
   /*!
-   * \brief indicator of the type of integral record (core, 1-electron, 2-electron integrals; end of record; end of file)
+   * \brief Indicator of the type of integral record (core, 1-electron, 2-electron integrals; end of record; end of file)
     */
-  typedef enum { I0, I1a, I1b, I2aa, I2ab, I2bb, endOfFile, endOfRecord } integralType;
+  typedef enum {
+    I0, ///< scalar part of energy, ie nuclear repulsion plus any included core
+    I1a, ///< 1-electron integrals, alpha spin
+    I1b, ///< 1-electron integrals, beta spin
+    I2aa, ///< 2-electron integrals, alpha-alpha spin
+    I2ab, ///< 2-electron integrals, alpha-beta spin
+    I2bb, ///< 2-electron integrals, beta-beta spin
+    endOfFile, ///< End of file
+    endOfRecord ///< Separator between different spin cases
+  } integralType;
 
   /*!
    * \brief Position the file so that the next call to nextIntegral will deliver the first integral
@@ -133,6 +158,7 @@ private:
 };
 #endif
 
+// C binding
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -144,10 +170,9 @@ void FCIdumpInitialise(char* filename);
 /*!
  * \brief C binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
- * \param values  The result as a vector of char*. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
- * \param n The length of values
+ * \param value  The result as a char* (arrays not supported). If not present in the FCIDUMP, value is not overwritten, i.e. value serves as a default
  */
-void FCIdumpParameterS(char* key, char** values, int n);
+void FCIdumpParameterS(char* key, char* value);
 /*!
  * \brief C binding of FCIdump:  Obtain an integer namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
@@ -179,9 +204,30 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
 /*!
  * \brief C binding of FCIdump: add a parameter
  * \param key key
- * \param values values
+ * \param value value. Note that through this interface only a single string, not an array, can be given
  */
-void FCIdumpAddParameter(char* key, int values[]);
+void FCIdumpAddParameterS(char* key, char* value);
+/*!
+ * \brief C binding of FCIdump: add a parameter
+ * \param key key
+ * \param values values
+ * \param n length of values
+ */
+void FCIdumpAddParameterI(char* key, int values[], int n);
+/*!
+ * \brief C binding of FCIdump: add a parameter
+ * \param key key
+ * \param values values
+ * \param n length of values
+ */
+void FCIdumpAddParameterF(char* key, double values[],int n);
+  /*!
+   * \brief C binding of FCIdump: write the data to an external file
+   * \param filename The relative or absolute path name of the file
+   * \param type The desired format of the file
+   * \return 1 if OK, 0 if not
+   */
+int FCIdumpWrite(char* filename, int type);
 #ifdef __cplusplus
 }
 #endif

@@ -25,14 +25,37 @@ MODULE FCIdumpF
    DOUBLE PRECISION, DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterF
+  SUBROUTINE FCIdumpAddParameterS(key, valu) BIND(C,name="FCIdumpAddParameterS")
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   CHARACTER(kind=C_CHAR), DIMENSION(*) :: valu
+  END SUBROUTINE FCIdumpAddParameterS
+  SUBROUTINE FCIdumpAddParameterI(key, values, n) BIND(C,name="FCIdumpAddParameterI")
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   INTEGER(kind=C_INT), DIMENSION(*) :: values
+   INTEGER(kind=C_INT), VALUE :: n
+  END SUBROUTINE FCIdumpAddParameterI
+  SUBROUTINE FCIdumpAddParameterF(key, values, n) BIND(C,name="FCIdumpAddParameterF")
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   DOUBLE PRECISION, DIMENSION(*) :: values
+   INTEGER(kind=C_INT), VALUE :: n
+  END SUBROUTINE FCIdumpAddParameterF
   SUBROUTINE FCIdumpRewindC() BIND(C,name="FCIdumpRewind")
   END SUBROUTINE FCIdumpRewindC
   FUNCTION FCIdumpFNextIntegralC(i,j,k,l,valu) BIND(C,name="FCIdumpNextIntegral")
    USE iso_c_binding, ONLY: C_INT
-   integer(kind=C_INT) :: FCIdumpFNextIntegralC
+   INTEGER(kind=C_INT) :: FCIdumpFNextIntegralC
    INTEGER(kind=C_INT) :: i,j,k,l
    DOUBLE PRECISION :: valu
   END FUNCTION FCIdumpFNextIntegralC
+  FUNCTION FCIdumpWrite(filename, typc) BIND(C,name="FCIdumpWrite")
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   INTEGER(kind=C_INT) :: FCIdumpWrite
+   CHARACTER(kind=C_CHAR), DIMENSION(*) :: filename
+   INTEGER(kind=C_INT) :: typc
+  END FUNCTION FCIdumpWrite
  END INTERFACE
 CONTAINS
  
@@ -46,21 +69,20 @@ CONTAINS
  
 !> \brief F90 binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
 !> \param key The name of the parameter
-!> \param values  The result as a vector of characters. However, only a vector of length 1 is supported.
- SUBROUTINE FCIdumpFParameterS(key,values)
+!> \param valu  The result as a character. Note that character arrays are not supported
+ SUBROUTINE FCIdumpFParameterS(key,valu)
   CHARACTER(*), INTENT(in) :: key
-  CHARACTER(*), INTENT(inout), DIMENSION(:) :: values
+  CHARACTER(*), INTENT(inout) :: valu
   CHARACTER(kind=C_Char,len=1024) :: c_key
-  CHARACTER(kind=C_CHAR, LEN=LEN(values(1))) :: c_values
+  CHARACTER(kind=C_CHAR, LEN=LEN(valu)) :: c_values
   INTEGER :: i
-  IF (UBOUND(values,1) .GT. LBOUND(values,1)) STOP 'Fortran FCIdump interface supports only scalar character parameters'
   c_key=TRIM(key)//C_NULL_CHAR
-  c_values = TRIM(values(LBOUND(values,1)))//C_NULL_CHAR
+  c_values = TRIM(valu)//C_NULL_CHAR
   CALL FCIDumpParameterS(c_key,c_values,INT(1,kind=C_INT));
-  DO i=1,LEN(values(LBOUND(values,1)))
+  DO i=1,LEN(valu)
    IF (c_values(i:i) .EQ. C_NULL_CHAR) EXIT
-  values(LBOUND(values,1))(i:i) = c_values(i:i)
- END DO
+   valu(i:i) = c_values(i:i)
+  END DO
  END SUBROUTINE FCIdumpFParameterS
  
 !> \brief F90 binding of FCIdump:  Obtain an integer namelist parameter from the FCIDUMP data.
@@ -87,25 +109,80 @@ CONTAINS
   c_key=TRIM(key)//C_NULL_CHAR
   CALL FCIDumpParameterF(c_key,values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
  END SUBROUTINE FCIdumpFParameterF
-
+ 
 !> \brief F90 binding of FCIdump: Position the file so that the next call to nextIntegral will deliver the first integral
  SUBROUTINE FCIdumpFRewind()
   CALL FCIdumpRewindC()
  END SUBROUTINE FCIdumpFRewind
-
+ 
 !> \brief F90 binding of FCIdump: Read the next integral from the file
 !> \param i orbital label (zero indicates not 1-electron or 2-electron)
 !> \param j orbital label
 !> \param k orbital label(zero indicates not 2-electron)
 !> \param l orbital label
-!> \param value numerical value of the integral
+!> \param valu numerical value of the integral
 !> \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
- FUNCTION FCIdumpFNextIntegral(i,j,k,l,value)
+ FUNCTION FCIdumpFNextIntegral(i,j,k,l,valu)
   INTEGER :: FCIdumpFNextIntegral
   INTEGER, INTENT(inout) :: i,j,k,l
   INTEGER(kind=C_INT) :: ic,jc,kc,lc
-  DOUBLE PRECISION, INTENT(inout) :: value
-  FCIdumpFNextIntegral = FCIdumpFNextIntegralC(ic,jc,kc,lc,value)
+  DOUBLE PRECISION, INTENT(inout) :: valu
+  FCIdumpFNextIntegral = FCIdumpFNextIntegralC(ic,jc,kc,lc,valu)
   i=ic; j=jc; k=kc; l=lc
  END FUNCTION FCIdumpFNextIntegral
+ 
+!> \brief F90 binding of FCIdump:  Set a string namelist parameter in the FCIDUMP data.
+!> \param key The name of the parameter
+!> \param valu  The value to be set as a single character string
+ SUBROUTINE FCIdumpFAddParameterS(key,valu)
+  CHARACTER(*), INTENT(in) :: key
+  CHARACTER(*), INTENT(in) :: valu
+  CHARACTER(kind=C_Char,len=1024) :: c_key
+  CHARACTER(kind=C_CHAR, LEN=LEN(valu)+1) :: c_value
+  c_key=TRIM(key)//C_NULL_CHAR
+  c_value = TRIM(valu)//C_NULL_CHAR
+  CALL FCIDumpAddParameterS(c_key,c_value);
+ END SUBROUTINE FCIdumpFAddParameterS
+ 
+!> \brief F90 binding of FCIdump:  Set an integer namelist parameter in the FCIDUMP data.
+!> \param key The name of the parameter
+!> \param values  The values to be set as a vector of integers.
+ SUBROUTINE FCIdumpFAddParameterI(key,values)
+  CHARACTER(*), INTENT(in) :: key
+  INTEGER, INTENT(in), DIMENSION(:) :: values
+  CHARACTER(kind=C_Char,len=1024) :: c_key
+  INTEGER(kind=C_INT), DIMENSION(LBOUND(values,1):UBOUND(values,1)) :: c_values
+  c_key=TRIM(key)//C_NULL_CHAR
+  c_values = values
+  CALL FCIDumpAddParameterI(c_key,c_values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
+ END SUBROUTINE FCIdumpFAddParameterI
+ 
+!> \brief F90 binding of FCIdump:  Set a floating-point namelist parameter in the FCIDUMP data.
+!> \param key The name of the parameter
+!> \param values  The values to be set as a vector of doubles.
+ SUBROUTINE FCIdumpFAddParameterF(key,values)
+  CHARACTER(*), INTENT(in) :: key
+  DOUBLE PRECISION, INTENT(in), DIMENSION(:) :: values
+  CHARACTER(kind=C_Char,len=1024) :: c_key
+  c_key=TRIM(key)//C_NULL_CHAR
+  CALL FCIDumpAddParameterF(c_key,values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
+ END SUBROUTINE FCIdumpFAddParameterF
+
+!> \brief F90 binding of FCIdump: write the data to an external file
+!> \param filename The relative or absolute path name of the file
+!> \param typf The desired format of the file
+!> \return .TRUE. if OK, .FALSE. if not
+ FUNCTION FCIdumpFWrite(filename,typf)
+  LOGICAL :: FCIdumpFWrite
+  CHARACTER(*), INTENT(in) :: filename
+  INTEGER, INTENT(in), OPTIONAL :: typf
+  INTEGER :: typ
+  CHARACTER(kind=C_CHAR, len=1024) :: c_filename
+  c_filename=TRIM(filename)//C_NULL_CHAR
+  FCIDumpFWrite = .FALSE.
+  typ = 0
+  IF (PRESENT(typf)) typ=typf
+  IF ( FCIDumpWrite(c_filename, typ) .EQ.1) FCIDumpFWrite = .TRUE.
+  RETURN
+ END FUNCTION FCIdumpFWrite
 END MODULE FCIdumpF

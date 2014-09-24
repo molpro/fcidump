@@ -106,6 +106,13 @@ int main(int argc, char *argv[])
           printf("found scalar integral %f\n",
                  value);
       }
+      FCIdumpAddParameterS("TESTC","99");
+      int test[]={99,44};
+      FCIdumpAddParameterI("TEST",test,2);
+      if (FCIdumpWrite("new.fcidump",0) == 1)
+        printf("written to new file\n");
+      else
+        printf("failure to write to new file\n");
 #endif
     }
   }

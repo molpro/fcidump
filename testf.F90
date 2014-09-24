@@ -26,5 +26,12 @@ PROGRAM testF
     PRINT *, 'scalar integral ',valu
    END IF
   END DO
+  call FCIdumpFAddParameterS('TESTC','99')
+  call FCIdumpFAddParameterI('TEST',(/99,44/))
+  if ( FCIdumpFWrite('new.fcidump') ) then
+   print*,'written to new file'
+   else
+     print*,'failure to write to new file'
+     end if
  END DO
 END PROGRAM testF
