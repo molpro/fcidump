@@ -130,6 +130,39 @@ void FCIdump::rewind()
   currentState = states.begin();
 }
 
+#include <iomanip>
+bool FCIdump::write(std::string filename, fileType type)
+{
+  std::ofstream s(filename);
+  if ( (s.rdstate() & std::ifstream::failbit ) != 0 ) {
+    std::cout << "FCIdump::write failed to open "<<filename<<std::endl;
+    s.close();
+    return false;
+  }
+  s << "&FCI" << std::endl;
+  size_t pos=0;
+  while ( (pos = namelistData.find('=',pos)) != std::string::npos){
+    std::string key=namelistData.substr(0,pos);
+    size_t pose=namelistData.find("=",pos+1);
+    pose=namelistData.find_last_of(",",pose)+1;
+    while (namelistData.substr(pose-2,1) == ",") pose--;
+    pos=namelistData.find_last_of(",",pos)+1;
+    if (namelistData.substr(pos,pose-pos).find("DUMMY_KEY") == std::string::npos) s << " " << namelistData.substr(pos,pose-pos) << std::endl;
+    pos=pose;
+  }
+  s<< "/"<<std::endl;
+  s<<std::scientific<<std::setprecision(15);
+  rewind();
+  int i,j,k,l;
+  double value;
+  integralType typ;
+  while ((typ = nextIntegral(i,j,k,l,value)) != endOfFile) {
+    s<<value<<" "<< i<<" "<<j<<" "<<k<<" "<<l<<std::endl;
+  }
+  s.close();
+  return true;
+}
+
 FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, double &value)
 {
   integralType result = *currentState;

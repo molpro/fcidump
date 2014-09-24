@@ -90,6 +90,19 @@ public:
   std::string fileName();
 
   /*!
+   * \brief the possible external file formats
+    */
+  typedef enum { FileFormatted } fileType;
+
+  /*!
+   * \brief Write the object to an external file
+   * \param filename The relative or absolute path name of the file
+   * \param type The desired format of the file
+   * \return true if OK, false if not
+   */
+  bool write(std::string filename, fileType type=FileFormatted);
+
+  /*!
    * \brief indicator of the type of integral record (core, 1-electron, 2-electron integrals; end of record; end of file)
     */
   typedef enum { I0, I1a, I1b, I2aa, I2ab, I2bb, endOfFile, endOfRecord } integralType;

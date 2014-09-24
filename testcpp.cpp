@@ -71,6 +71,10 @@ int main(int argc, char *argv[])
       dump.addParameter("TEST",test);
       std::vector<int> result = dump.parameter("TEST");
       if (result != test) throw "trouble with int addParameter";
+      if (dump.write("new.fcidump"))
+        std::cout << "written to new file"<<std::endl;
+      else
+        std::cout << "failure to write to new file"<<std::endl;
 #else
       printf("\nProcess file %s\n",files[ifile]);
       FCIdumpInitialise(files[ifile]);
