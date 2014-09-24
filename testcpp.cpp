@@ -25,7 +25,11 @@ int main(int argc, char *argv[])
 
   int oneelectron[] = {2,1};
   int twoelectron[] = {4,3,2,1};
+#ifdef __cplusplus
+  std::vector<std::string> files(1,"rhf.fcidump"); files.push_back("uhf.fcidump");
+#else
   char* files[]={"rhf.fcidump","uhf.fcidump"};
+#endif
   for (int ifile=0; ifile<2; ifile++) {
     if (parallel_rank == 0) {
 #ifdef __cplusplus
@@ -59,16 +63,25 @@ int main(int argc, char *argv[])
           std::cout << "found "<<
                        "scalar integral "<<value <<std::endl;
       }
+      std::vector<std::string> testc(1,"99"); testc.push_back("98");
+      dump.addParameter("TESTC",testc);
+      std::vector<std::string> resultc = dump.parameter("TESTC",std::vector<std::string>(1,""));
+      if (resultc != testc) throw "trouble with string addParameter";
+      std::vector<int> test(1,99);test.push_back(44);
+      dump.addParameter("TEST",test);
+      std::vector<int> result = dump.parameter("TEST");
+      if (result != test) throw "trouble with int addParameter";
 #else
+      printf("\nProcess file %s\n",files[ifile]);
       FCIdumpInitialise(files[ifile]);
       int buffer[1];
-      FCIdumpParameter("NELEC",buffer); printf("NELEC=%d\n",buffer[0]);
-      FCIdumpParameter("MS2",buffer); printf("MS2=%d\n",buffer[0]);
-      FCIdumpParameter("NORB",buffer); printf("NORB=%d\n",buffer[0]);
+      FCIdumpParameterI("NELEC",buffer,1); printf("NELEC=%d\n",buffer[0]);
+      FCIdumpParameterI("MS2",buffer,1); printf("MS2=%d\n",buffer[0]);
+      FCIdumpParameterI("NORB",buffer,1); printf("NORB=%d\n",buffer[0]);
       int norb=buffer[0];
-      FCIdumpParameter("IUHF",buffer); printf("IUHF=%d\n",buffer[0]);
+      FCIdumpParameterI("IUHF",buffer,1); printf("IUHF=%d\n",buffer[0]);
       int orbsym[norb];
-      FCIdumpParameter("ORBSYM",orbsym); printf("ORBSYM=");
+      FCIdumpParameterI("ORBSYM",orbsym,norb); printf("ORBSYM=");
       for (int i=0; i<norb; i++) printf("%d,",orbsym[i]);
       printf("\n");
       int i,j,k,l;

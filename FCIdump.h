@@ -57,11 +57,32 @@ public:
      */
   std::vector<std::string> parameter(std::string key, std::vector<std::string> def);
   /*!
-   * \brief addParameter add a parameter
+   * \brief addParameter add a parameter with array values
    * \param key key
    * \param values values
    */
   void addParameter(const std::string& key, const std::vector<std::string>& values);
+
+  /*!
+   * \brief addParameter add a parameter with array values
+   * \param key key
+   * \param values values
+   */
+  void addParameter(const std::string& key, const std::vector<int>& values);
+
+  /*!
+   * \brief addParameter add a parameter with a scalar value
+   * \param key key
+   * \param value value
+   */
+  void addParameter(const std::string& key, const std::string& value);
+
+  /*!
+   * \brief addParameter add a parameter with a scalar value
+   * \param key key
+   * \param value value
+   */
+  void addParameter(const std::string& key, const int& value);
 
    /*!
      * \brief fileName The file containing the FCIDUMP data
@@ -110,9 +131,24 @@ void FCIdumpInitialise(char* filename);
 /*!
  * \brief C binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
- * \param values  The result as a vector of integers.
+ * \param values  The result as a vector of char*. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
+ * \param n The length of values
  */
-void FCIdumpParameter(char* key, int* values);
+void FCIdumpParameterS(char* key, char** values, int n);
+/*!
+ * \brief C binding of FCIdump:  Obtain an integer namelist parameter from the FCIDUMP data.
+ * \param key The name of the parameter
+ * \param values  The result as a vector of integers. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
+ * \param n The length of values
+ */
+void FCIdumpParameterI(char* key, int* values, int n);
+/*!
+ * \brief C binding of FCIdump:  Obtain a floating-point namelist parameter from the FCIDUMP data.
+ * \param key The name of the parameter
+ * \param values  The result as a vector of doubles. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
+ * \param n The length of values
+ */
+void FCIdumpParameterF(char* key, double* values, int n);
 /*!
  * \brief C binding of FCIdump: Position the file so that the next call to nextIntegral will deliver the first integral
  */
