@@ -202,8 +202,9 @@ FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, doub
   }
   else if (k == 0 && (*currentState != FCIdump::I1a && *currentState != FCIdump::I1b)) {
 //    std::cout << "special state switch to "<<*(currentState+1)<<std::endl;
-    result=FCIdump::endOfRecord; ++currentState;
+    result=(*currentState==FCIdump::I2aa)?FCIdump::I1a:FCIdump::endOfRecord; ++currentState;
   }
+  //xout << "i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
   return result;
 }
 
