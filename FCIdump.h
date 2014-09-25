@@ -28,6 +28,11 @@ class FCIdump
 {
 public:
   /*!
+     * \brief Construct an empty FCIdump object
+     */
+  FCIdump();
+
+  /*!
      * \brief Construct FCIdump object
      * \param filename The file containing the FCIDUMP data
      */
@@ -114,9 +119,20 @@ public:
    * \brief Write the object to an external file
    * \param filename The relative or absolute path name of the file
    * \param type The desired format of the file
+   * \param integrals If true, write out the integrals; otherwise leave the file open and positioned ready to write integrals later
    * \return true if OK, false if not
    */
-  bool write(std::string filename, fileType type=FileFormatted);
+  bool write(std::string filename, fileType type=FileFormatted, bool integrals=true);
+
+  /*!
+   * \brief writeIntegral Write an integral to the output stream. write() must already have been called.
+   * \param i Orbital index
+   * \param j Orbital index
+   * \param k Orbital index
+   * \param l Orbital index
+   * \param value The integral
+   */
+  void writeIntegral(int i, int j, int k, int l, double value);
 
   /*!
    * \brief Indicator of the type of integral record (core, 1-electron, 2-electron integrals; end of record; end of file)
@@ -152,6 +168,7 @@ private:
   std::string namelistData;
   std::string _fileName;
   std::ifstream stream;
+  std::ofstream outputStream;
   bool uhf;
   std::vector<integralType> states;
   std::vector<integralType>::const_iterator currentState;

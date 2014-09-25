@@ -6,3 +6,7 @@ Makefile
 cmake_install.cmake
 CMakeLists.txt.user*
 build/
+Doxyfile
+html/
+latex/
+new.fcidump
