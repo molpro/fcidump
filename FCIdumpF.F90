@@ -58,7 +58,7 @@ MODULE FCIdumpF
   END FUNCTION FCIdumpWrite
  END INTERFACE
 CONTAINS
- 
+
 !> \brief F90 binding of FCIdump: initialise access to an FCIDUMP
 !> \param filename The file containing the FCIDUMP data
  SUBROUTINE FCIdumpFInitialise(filename)
@@ -66,7 +66,7 @@ CONTAINS
   c_filename=TRIM(filename)//C_NULL_CHAR
   CALL FCIDumpInitialiseC(c_filename)
  END SUBROUTINE FCIdumpFInitialise
- 
+
 !> \brief F90 binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param valu  The result as a character. Note that character arrays are not supported
@@ -84,7 +84,7 @@ CONTAINS
    valu(i:i) = c_values(i:i)
   END DO
  END SUBROUTINE FCIdumpFParameterS
- 
+
 !> \brief F90 binding of FCIdump:  Obtain an integer namelist parameter from the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param values  The result as a vector of integers.
@@ -98,7 +98,7 @@ CONTAINS
   CALL FCIDumpParameterI(c_key,c_values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
   values = c_values
  END SUBROUTINE FCIdumpFParameterI
- 
+
 !> \brief F90 binding of FCIdump:  Obtain a floating-point namelist parameter from the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param values  The result as a vector of doubles.
@@ -109,12 +109,12 @@ CONTAINS
   c_key=TRIM(key)//C_NULL_CHAR
   CALL FCIDumpParameterF(c_key,values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
  END SUBROUTINE FCIdumpFParameterF
- 
+
 !> \brief F90 binding of FCIdump: Position the file so that the next call to nextIntegral will deliver the first integral
  SUBROUTINE FCIdumpFRewind()
   CALL FCIdumpRewindC()
  END SUBROUTINE FCIdumpFRewind
- 
+
 !> \brief F90 binding of FCIdump: Read the next integral from the file
 !> \param i orbital label (zero indicates not 1-electron or 2-electron)
 !> \param j orbital label
@@ -130,7 +130,7 @@ CONTAINS
   FCIdumpFNextIntegral = FCIdumpFNextIntegralC(ic,jc,kc,lc,valu)
   i=ic; j=jc; k=kc; l=lc
  END FUNCTION FCIdumpFNextIntegral
- 
+
 !> \brief F90 binding of FCIdump:  Set a string namelist parameter in the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param valu  The value to be set as a single character string
@@ -143,7 +143,7 @@ CONTAINS
   c_value = TRIM(valu)//C_NULL_CHAR
   CALL FCIDumpAddParameterS(c_key,c_value);
  END SUBROUTINE FCIdumpFAddParameterS
- 
+
 !> \brief F90 binding of FCIdump:  Set an integer namelist parameter in the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param values  The values to be set as a vector of integers.
@@ -156,7 +156,7 @@ CONTAINS
   c_values = INT(values,kind=C_INT)
   CALL FCIDumpAddParameterI(c_key,c_values,INT(UBOUND(values,1)-LBOUND(values,1)+1,kind=C_INT));
  END SUBROUTINE FCIdumpFAddParameterI
- 
+
 !> \brief F90 binding of FCIdump:  Set a floating-point namelist parameter in the FCIDUMP data.
 !> \param key The name of the parameter
 !> \param values  The values to be set as a vector of doubles.
