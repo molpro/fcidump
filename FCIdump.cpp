@@ -162,7 +162,6 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals)
   if (integrals) {
   int i,j,k,l;
   double value;
-  integralType typ;
   while (nextIntegral(i,j,k,l,value) != endOfFile)
     writeIntegral(i,j,k,l,value);
   }
