@@ -11,7 +11,7 @@ FCIdump::FCIdump()
   namelistData=",";
 }
 
-FCIdump::FCIdump(std::string filename)
+FCIdump::FCIdump(const std::string filename)
 {
   _fileName = filename;
   std::ifstream s;
@@ -27,6 +27,11 @@ FCIdump::FCIdump(std::string filename)
     namelistData.append(ss);
   namelistData.append(",DUMMY_KEY=,"); // dummy entry at end to simplify parsing
 //  xout <<"namelistData=" <<namelistData <<std::endl;
+}
+
+FCIdump::FCIdump(const std::vector<char> bytestream)
+{
+
 }
 
 std::string FCIdump::fileName()
@@ -167,6 +172,32 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals)
   }
   outputStream.close();
   return true;
+}
+
+std::vector<char> FCIdump::bytestream(bool integrals)
+{
+  std::vector<char> result;
+  for (std::string::const_iterator s=namelistData.begin(); s!=namelistData.end(); s++)
+    result.push_back(*s);
+  if (integrals) {
+    rewind();
+    int i,j,k,l;
+    union {
+      struct {
+        int16_t labels[4];
+        double value;
+      } s;
+      char buf[16];
+    } u;
+    while (nextIntegral(i,j,k,l,u.s.value)!=endOfFile) {
+      u.s.labels[0]=i;
+      u.s.labels[1]=j;
+      u.s.labels[2]=k;
+      u.s.labels[3]=l;
+    }
+    for(i=0; i<16; i++) result.push_back(u.buf[i]);
+  }
+  return result;
 }
 
 void FCIdump::writeIntegral(int i, int j, int k, int l, double value)

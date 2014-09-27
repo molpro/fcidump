@@ -36,7 +36,13 @@ public:
      * \brief Construct FCIdump object
      * \param filename The file containing the FCIDUMP data
      */
-  FCIdump(std::string filename="FCIDUMP");
+  FCIdump(const std::string filename="FCIDUMP");
+
+  /*!
+     * \brief Construct FCIdump object from bytestream
+     * \param bytestream The serialised representation
+     */
+  FCIdump(const std::vector<char> bytestream);
 
   /*!
      * \brief Obtain an integer namelist parameter from the FCIDUMP data.
@@ -114,6 +120,13 @@ public:
   typedef enum {
     FileFormatted ///< formatted ASCII file
   } fileType;
+
+  /*!
+   * \brief Serialise the object to a stream of bytes
+   * \param integrals If true, write out the integrals as well as the headers
+   * \return the serialised representation of the object
+   */
+  std::vector<char> bytestream(bool integrals=true);
 
   /*!
    * \brief Write the object to an external file
