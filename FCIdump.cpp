@@ -174,6 +174,7 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals)
   return true;
 }
 
+#include <stdint.h>
 std::vector<char> FCIdump::bytestream(bool integrals)
 {
   std::vector<char> result;
