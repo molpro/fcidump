@@ -10,3 +10,9 @@ Doxyfile
 html/
 latex/
 new.fcidump
+testc
+testcpp
+testf
+testc.c
+libFCIdump.a
+*.mod
