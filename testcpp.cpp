@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 #else
   char* files[]={"rhf.fcidump","uhf.fcidump"};
 #endif
-  for (int ifile=0; ifile<2; ifile++) {
+  int ifile;
+  for (ifile=0; ifile<2; ifile++) {
     if (parallel_rank == 0) {
 #ifdef __cplusplus
       std::cout << std::endl<<"Process file "<<files[ifile]<<std::endl;
@@ -86,9 +87,9 @@ int main(int argc, char *argv[])
       FCIdumpParameterI("IUHF",buffer,1); printf("IUHF=%d\n",buffer[0]);
       int orbsym[norb];
       FCIdumpParameterI("ORBSYM",orbsym,norb); printf("ORBSYM=");
-      for (int i=0; i<norb; i++) printf("%d,",orbsym[i]);
-      printf("\n");
       int i,j,k,l;
+      for (i=0; i<norb; i++) printf("%d,",orbsym[i]);
+      printf("\n");
       double value;
       FCIdumpRewind();
       int type;
