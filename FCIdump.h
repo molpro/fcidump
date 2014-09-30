@@ -5,11 +5,11 @@
 #include <vector>
 #include <fstream>
 /**
-#ifdef MOLPRO
+ @if MOLPRO
  @page FCIdump FCIdump access through C++, C and Fortran
-#else
+ @else
  @mainpage FCIdump access through C++, C and Fortran
-#endif
+ @endif
 
  @section Introduction
  This is a C++ class, together with non-object-oriented C and Fortran 90 bindings, that implement access
