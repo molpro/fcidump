@@ -42,5 +42,5 @@ ADD_CUSTOM_COMMAND(OUTPUT ${doxy_html_index_file}
                    MAIN_DEPENDENCY ${doxyfile} ${doxyfile_in}
                    DEPENDS ${SRCS}
                    COMMENT "Generating API documentation with Doxygen" VERBATIM)
-ADD_CUSTOM_TARGET( doc ALL DEPENDS ${doxy_html_index_file} )
+ADD_CUSTOM_TARGET( FCIdump-doc ALL DEPENDS ${doxy_html_index_file} )
 endif(DOXYGEN_FOUND)
