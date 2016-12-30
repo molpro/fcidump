@@ -20,9 +20,9 @@ MODULE FCIdumpF
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterI
   SUBROUTINE FCIdumpParameterF(key, values, n) BIND(C,name="FCIdumpParameterF")
-   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT, C_DOUBLE
    CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
-   DOUBLE PRECISION, DIMENSION(*) :: values
+   REAL(kind=C_DOUBLE), DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterF
   SUBROUTINE FCIdumpAddParameterS(key, valu) BIND(C,name="FCIdumpAddParameterS")
@@ -37,18 +37,18 @@ MODULE FCIdumpF
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpAddParameterI
   SUBROUTINE FCIdumpAddParameterF(key, values, n) BIND(C,name="FCIdumpAddParameterF")
-   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
+   USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT, C_DOUBLE
    CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
-   DOUBLE PRECISION, DIMENSION(*) :: values
+   REAL(kind=C_DOUBLE), DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpAddParameterF
   SUBROUTINE FCIdumpRewindC() BIND(C,name="FCIdumpRewind")
   END SUBROUTINE FCIdumpRewindC
   FUNCTION FCIdumpFNextIntegralC(i,j,k,l,valu) BIND(C,name="FCIdumpNextIntegral")
-   USE iso_c_binding, ONLY: C_INT
+   USE iso_c_binding, ONLY: C_INT, C_DOUBLE
    INTEGER(kind=C_INT) :: FCIdumpFNextIntegralC
    INTEGER(kind=C_INT) :: i,j,k,l
-   DOUBLE PRECISION :: valu
+   REAL(kind=C_DOUBLE) :: valu
   END FUNCTION FCIdumpFNextIntegralC
   FUNCTION FCIdumpWrite(filename, typc) BIND(C,name="FCIdumpWrite")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
