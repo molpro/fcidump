@@ -8,6 +8,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
+#include <stdexcept>
 #define xout std::cout
 
 FCIdump::FCIdump()
@@ -23,7 +24,7 @@ FCIdump::FCIdump(const std::string filename)
   s.open(_fileName.c_str());
   if ( (s.rdstate() & std::ifstream::failbit ) != 0 ) {
     std::cerr << "Error opening " << _fileName <<std::endl;
-    throw "FCIDUMP::parameter file missing";
+    throw std::runtime_error("FCIDUMP::parameter file missing");
   }
   // cache the namelist data
   std::string ss;

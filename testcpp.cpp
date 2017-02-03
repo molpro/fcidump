@@ -67,11 +67,11 @@ int main(int argc, char *argv[])
       std::vector<std::string> testc(1,"99"); testc.push_back("98");
       dump.addParameter("TESTC",testc);
       std::vector<std::string> resultc = dump.parameter("TESTC",std::vector<std::string>(1,""));
-      if (resultc != testc) throw "trouble with string addParameter";
+      if (resultc != testc) throw std::runtime_error("trouble with string addParameter");
       std::vector<int> test(1,99);test.push_back(44);
       dump.addParameter("TEST",test);
       std::vector<int> result = dump.parameter("TEST");
-      if (result != test) throw "trouble with int addParameter";
+      if (result != test) throw std::runtime_error("trouble with int addParameter");
       if (dump.write("new.fcidump"))
         std::cout << "written to new file"<<std::endl;
       else
