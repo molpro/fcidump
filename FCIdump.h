@@ -184,11 +184,11 @@ public:
 private:
   std::string namelistData;
   std::string _fileName;
-  std::ifstream stream;
+  mutable std::ifstream stream;
   mutable std::ofstream outputStream;
-  bool uhf;
-  std::vector<integralType> states;
-  std::vector<integralType>::const_iterator currentState;
+  mutable bool uhf;
+  mutable std::vector<integralType> states;
+  mutable std::vector<integralType>::const_iterator currentState;
 };
 #endif
 
