@@ -54,7 +54,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<int> parameter(std::string key, std::vector<int> def=std::vector<int>(1,0)) const;
+  std::vector<int> parameter(const std::string &key, const std::vector<int>& def=std::vector<int>(1,0)) const;
 
   /*!
      * \brief Obtain a real namelist parameter from the FCIDUMP data.
@@ -62,7 +62,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<double> parameter(std::string key, std::vector<double> def) const;
+  std::vector<double> parameter(const std::string &key, const std::vector<double> &def) const;
 
   /*!
      * \brief Obtain a string namelist parameter from the FCIDUMP data.
@@ -70,7 +70,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<std::string> parameter(std::string key, std::vector<std::string> def) const;
+  std::vector<std::string> parameter(const std::string& key, const std::vector<std::string>& def) const;
   /*!
    * \brief Add a parameter with array values
    * \param key key

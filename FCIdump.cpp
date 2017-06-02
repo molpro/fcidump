@@ -47,7 +47,7 @@ std::string FCIdump::fileName() const
 
 
 
-std::vector<int> FCIdump::parameter(std::string key, std::vector<int> def) const { // dirty sucking in from FCIDUMP namelist
+std::vector<int> FCIdump::parameter(const std::string& key, const std::vector<int> &def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<int> answer;
   std::vector<std::string> strings = parameter(key,std::vector<std::string>(1," "));
   if (strings == std::vector<std::string>(1," ")) return def;
@@ -61,7 +61,7 @@ std::vector<int> FCIdump::parameter(std::string key, std::vector<int> def) const
 }
 
 
-std::vector<double> FCIdump::parameter(std::string key, std::vector<double> def) const { // dirty sucking in from FCIDUMP namelist
+std::vector<double> FCIdump::parameter(const std::string& key, const std::vector<double>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<double> answer;
   std::vector<std::string> strings = parameter(key,std::vector<std::string>(1," "));
   if (strings == std::vector<std::string>(1," ")) return def;
@@ -74,7 +74,7 @@ std::vector<double> FCIdump::parameter(std::string key, std::vector<double> def)
   return answer;
 }
 
-std::vector<std::string> FCIdump::parameter(std::string key, std::vector<std::string> def) const { // dirty sucking in from FCIDUMP namelist
+std::vector<std::string> FCIdump::parameter(const std::string& key, const std::vector<std::string>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<std::string> answer;
   size_t pos = namelistData.find(","+key+"=");
   if (pos == std::string::npos) return def;
