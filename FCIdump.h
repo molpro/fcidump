@@ -168,7 +168,7 @@ public:
   /*!
    * \brief Position the file so that the next call to nextIntegral will deliver the first integral
    */
-  void rewind();
+  void rewind() const;
 
   /*!
    * \brief Read the next integral from the file
@@ -179,7 +179,7 @@ public:
    * \param value numerical value of the integral
    * \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
    */
-  integralType nextIntegral(int& i, int& j, int& k, int& l, double& value);
+  integralType nextIntegral(int& i, int& j, int& k, int& l, double& value) const;
 
 private:
   std::string namelistData;

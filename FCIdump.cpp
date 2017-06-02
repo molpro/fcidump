@@ -130,7 +130,7 @@ void FCIdump::addParameter(const std::string &key, const double &value)
   addParameter(key,std::vector<double>(1,value));
 }
 
-void FCIdump::rewind()
+void FCIdump::rewind() const
 {
   stream.open(_fileName.c_str());
   std::string ss;
@@ -212,7 +212,7 @@ void FCIdump::writeIntegral(int i, int j, int k, int l, double value) const
     outputStream<<value<<" "<< i<<" "<<j<<" "<<k<<" "<<l<<std::endl;
 }
 
-FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, double &value)
+FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, double &value) const
 {
   integralType result = *currentState;
   if (stream >> value) {
