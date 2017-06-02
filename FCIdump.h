@@ -54,7 +54,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<int> parameter(std::string key, std::vector<int> def=std::vector<int>(1,0));
+  std::vector<int> parameter(std::string key, std::vector<int> def=std::vector<int>(1,0)) const;
 
   /*!
      * \brief Obtain a real namelist parameter from the FCIDUMP data.
@@ -62,7 +62,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<double> parameter(std::string key, std::vector<double> def);
+  std::vector<double> parameter(std::string key, std::vector<double> def) const;
 
   /*!
      * \brief Obtain a string namelist parameter from the FCIDUMP data.
@@ -70,7 +70,7 @@ public:
      * \param def Default value if the parameter is not found.
      * \return  The result as a vector of integers.
      */
-  std::vector<std::string> parameter(std::string key, std::vector<std::string> def);
+  std::vector<std::string> parameter(std::string key, std::vector<std::string> def) const;
   /*!
    * \brief Add a parameter with array values
    * \param key key
@@ -116,7 +116,7 @@ public:
    /*!
      * \brief The file containing the FCIDUMP data
      */
-  std::string fileName();
+  std::string fileName() const;
 
   /*!
    * \brief The possible external file formats
@@ -149,7 +149,7 @@ public:
    * \param l Orbital index
    * \param value The integral
    */
-  void writeIntegral(int i, int j, int k, int l, double value);
+  void writeIntegral(int i, int j, int k, int l, double value) const;
 
   /*!
    * \brief Indicator of the type of integral record (core, 1-electron, 2-electron integrals; end of record; end of file)
@@ -185,7 +185,7 @@ private:
   std::string namelistData;
   std::string _fileName;
   std::ifstream stream;
-  std::ofstream outputStream;
+  mutable std::ofstream outputStream;
   bool uhf;
   std::vector<integralType> states;
   std::vector<integralType>::const_iterator currentState;
