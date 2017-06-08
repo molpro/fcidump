@@ -138,8 +138,8 @@ void FCIdump::rewind() const
   uhf = parameter("IUHF").at(0) != 0;
   states.clear();
   states.push_back(I2aa);
-  if (uhf) states.push_back(I2ab);
   if (uhf) states.push_back(I2bb);
+  if (uhf) states.push_back(I2ab);
   states.push_back(I1a);
   if (uhf) states.push_back(I1b);
   states.push_back(I0);
@@ -151,7 +151,7 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals)
 {
   outputStream.open(filename.c_str());
   if ( (outputStream.rdstate() & std::ifstream::failbit ) != 0 ) {
-    std::cout << "FCIdump::write failed to open "<<filename<<std::endl;
+    xout << "FCIdump::write failed to open "<<filename<<std::endl;
     outputStream.close();
     return false;
   }
@@ -224,22 +224,22 @@ FCIdump::integralType FCIdump::nextIntegral(int &i, int &j, int &k, int &l, doub
   }
   // following is tricky stuff reflecting historical structure of UHF and RHF FCIdump files
   if (i == 0) {
-//    std::cout << "zero read uhf="<<uhf<<", *currentState="<<*currentState<<std::endl;
+//    xout << "zero read uhf="<<uhf<<", *currentState="<<*currentState<<std::endl;
     if (uhf && *currentState != I0) {
       result = endOfRecord;
       currentState++;
-//      std::cout << "end of Record signalled; *currentState="<<*currentState<<std::endl;
+//      xout << "end of Record signalled; *currentState="<<*currentState<<std::endl;
     }
     else {
-//      std::cout << "real scalar signalled"<<std::endl;
+//      xout << "real scalar signalled"<<std::endl;
       result = I0;
     }
   }
   else if (k == 0 && (*currentState != FCIdump::I1a && *currentState != FCIdump::I1b)) {
-//    std::cout << "special state switch to "<<*(currentState+1)<<std::endl;
+//    xout << "special state switch to "<<*(currentState+1)<<std::endl;
     result=(*currentState==FCIdump::I2aa)?FCIdump::I1a:FCIdump::endOfRecord; ++currentState;
   }
-  //xout << "i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
+//  xout << "FCIdump::nextIntegral i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
   return result;
 }
 
