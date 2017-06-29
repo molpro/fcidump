@@ -40,6 +40,12 @@ FCIdump::FCIdump(const std::vector<char> bytestream)
 
 }
 
+FCIdump::~FCIdump()
+{
+  if (outputStream.is_open()) outputStream.close();
+}
+
+
 std::string FCIdump::fileName() const
 {
   return _fileName;
@@ -176,7 +182,6 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals)
   while (nextIntegral(i,j,k,l,value) != endOfFile)
     writeIntegral(i,j,k,l,value);
   }
-  outputStream.close();
   return true;
 }
 

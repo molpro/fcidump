@@ -40,7 +40,11 @@ public:
      * \brief Construct FCIdump object
      * \param filename The file containing the FCIDUMP data
      */
-  FCIdump(const std::string filename="FCIDUMP");
+  FCIdump(const std::string filename);
+
+  ~FCIdump();
+
+  FCIdump(FCIdump&&) = default;
 
   /*!
      * \brief Construct FCIdump object from bytestream
