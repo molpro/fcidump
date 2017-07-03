@@ -44,7 +44,7 @@ public:
 
   ~FCIdump();
 
-  FCIdump(FCIdump&&) = default;
+  FCIdump(FCIdump&&);
 
   /*!
      * \brief Construct FCIdump object from bytestream
