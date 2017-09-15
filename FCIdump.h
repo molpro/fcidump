@@ -184,6 +184,8 @@ public:
    * \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
    */
   integralType nextIntegral(int& i, int& j, int& k, int& l, double& value) const;
+ std::string data() const { return namelistData;}
+
 
 private:
   std::string namelistData;
