@@ -1,7 +1,9 @@
 #ifdef MOLPRO
 #include "common/molpro_config.h"
 #else
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 #endif
 #include "FCIdump.h"
 #include <iostream>
