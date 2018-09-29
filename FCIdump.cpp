@@ -19,20 +19,23 @@ FCIdump::FCIdump()
   namelistData=",";
 }
 
-FCIdump::FCIdump(const std::string filename)
-{
+FCIdump::FCIdump(const std::string filename, bool old) {
   _fileName = filename;
   std::ifstream s;
   s.open(_fileName.c_str());
-  if ( (s.rdstate() & std::ifstream::failbit ) != 0 ) {
-    std::cerr << "Error opening " << _fileName <<std::endl;
-    throw std::runtime_error("FCIDUMP::parameter file missing");
+  if ((s.rdstate() & std::ifstream::failbit) != 0) {
+    if (old) {
+      std::cerr << "Error opening " << _fileName << std::endl;
+      throw std::runtime_error("FCIDUMP::parameter file missing");
+    }
+  } else {
+    // cache the namelist data
+    std::string ss;
+    s >> ss;
+    namelistData = ","; // forget the first word of namelist
+    while (s >> ss && ss != "&END" && ss != "/")
+      namelistData.append(ss);
   }
-  // cache the namelist data
-  std::string ss;
-  s >> ss ; namelistData=","; // forget the first word of namelist
-  while (s >> ss && ss != "&END" && ss != "/")
-    namelistData.append(ss);
   namelistData.append(",DUMMY_KEY=,"); // dummy entry at end to simplify parsing
 //  xout <<"namelistData=" <<namelistData <<std::endl;
 }
@@ -327,4 +330,8 @@ void FCIdumpAddParameterF(char *key, double values[], int n)
 int FCIdumpWrite(char* filename, int type)
 {
   return dump->write(std::string(filename),(FCIdump::fileType) type) ? 1 : 0 ;
+}
+
+void FCIdumpWriteIntegral(int i, int j, int k, int l, double value) {
+  dump->writeIntegral(i, j, k, l, value);
 }

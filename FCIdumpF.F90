@@ -56,6 +56,11 @@ MODULE FCIdumpF
    CHARACTER(kind=C_CHAR), DIMENSION(*) :: filename
    INTEGER(kind=C_INT) :: typc
   END FUNCTION FCIdumpWrite
+  SUBROUTINE FCIdumpWriteIntegralC(i, j, k, l, valu) BIND(C,name="FCIdumpWriteIntegral")
+   USE iso_c_binding, ONLY:  C_INT, C_DOUBLE
+   INTEGER(kind=C_INT), VALUE :: i, j, k, l;
+   REAL(kind=C_DOUBLE), VALUE :: valu
+  END SUBROUTINE FCIdumpWriteIntegralC
  END INTERFACE
 CONTAINS
 
@@ -185,4 +190,15 @@ CONTAINS
   IF ( FCIDumpWrite(c_filename, typ) .EQ.INT(1,kind=C_INT)) FCIDumpFWrite = .TRUE.
   RETURN
  END FUNCTION FCIdumpFWrite
+
+ SUBROUTINE FCIdumpFWriteIntegral(i, j, k, l, valu)
+  INTEGER, INTENT(in) :: i,j,k,l
+  DOUBLE PRECISION, INTENT(in) :: valu
+  INTEGER(KIND=C_INT) :: ic, jc, kc, lc
+  ic = INT(i,kind=C_INT)
+  jc = INT(j,kind=C_INT)
+  kc = INT(k,kind=C_INT)
+  lc = INT(l,kind=C_INT)
+  CALL FCIdumpWriteIntegralC(ic,jc,kc,lc,valu)
+ END SUBROUTINE FCIdumpFWriteIntegral
 END MODULE FCIdumpF

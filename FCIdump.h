@@ -39,12 +39,11 @@ public:
   /*!
      * \brief Construct FCIdump object
      * \param filename The file containing the FCIDUMP data
+     * \param old The file must pre-exist
      */
-  FCIdump(const std::string filename);
+  FCIdump(const std::string filename, bool old=false);
 
   ~FCIdump();
-
-  FCIdump(FCIdump&&);
 
   /*!
      * \brief Construct FCIdump object from bytestream
@@ -268,6 +267,15 @@ void FCIdumpAddParameterF(char* key, double values[],int n);
    * \return 1 if OK, 0 if not
    */
 int FCIdumpWrite(char* filename, int type);
+/*!
+ * \brief C binding of FCIdump: write an integral to the output stream. FCIdumpWrite() must already have been called.
+ * \param i Orbital index
+ * \param j Orbital index
+ * \param k Orbital index
+ * \param l Orbital index
+ * \param value The integral
+ */
+void FCIdumpWriteIntegral(int i, int j, int k, int l, double value);
 #ifdef __cplusplus
 }
 #endif
