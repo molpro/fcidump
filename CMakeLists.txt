@@ -1,33 +1,23 @@
-cmake_minimum_required(VERSION 2.6)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+cmake_minimum_required(VERSION 3.11)
 
-project(FCIdump)
-enable_language(Fortran)
+project(FCIdump C CXX Fortran)
 
-file(GLOB SRCS lib/FCIdump.cpp lib/FCIdump.h lib/FCIdumpF.F90)
-add_library(FCIdump ${SRCS})
-target_include_directories(FCIdump PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
+########## Compiler Flags ##########
 
 get_filename_component(COMPILER_NAME ${CMAKE_CXX_COMPILER} NAME)
 if (${COMPILER_NAME} STREQUAL "mpic++" OR ${COMPILER_NAME} STREQUAL "mpicxx")
     add_definitions(-DFCIDUMP_MPI)
-endif (${COMPILER_NAME} STREQUAL "mpic++" OR ${COMPILER_NAME} STREQUAL "mpicxx")
+endif ()
 
-add_custom_command(
-        OUTPUT testc.c
-        COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/testcpp.cpp testc.c
-        DEPENDS testcpp.cpp
-)
-add_executable(testcpp testcpp.cpp)
-target_link_libraries(testcpp LINK_PUBLIC FCIdump)
-add_executable(testc testc.c)
-target_link_libraries(testc LINK_PUBLIC FCIdump)
-add_executable(testf testf.F90)
-target_link_libraries(testf LINK_PUBLIC FCIdump)
 
-configure_file(rhf.fcidump rhf.fcidump COPYONLY)
-configure_file(uhf.fcidump uhf.fcidump COPYONLY)
+########## Targets ##########
+
+add_subdirectory(lib)
+add_subdirectory(test)
+
+
+########## Documentation ##########
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

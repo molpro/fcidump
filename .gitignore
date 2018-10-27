@@ -16,3 +16,4 @@ testf
 testc.c
 libFCIdump.a
 *.mod
+.idea
