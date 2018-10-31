@@ -1,20 +1,17 @@
 cmake_minimum_required(VERSION 3.11)
 
 project(FCIdump C CXX Fortran)
+set(CMAKE_CXX_STANDARD 14)
 
-
-########## Compiler Flags ##########
-
-get_filename_component(COMPILER_NAME ${CMAKE_CXX_COMPILER} NAME)
-if (${COMPILER_NAME} STREQUAL "mpic++" OR ${COMPILER_NAME} STREQUAL "mpicxx")
-    add_definitions(-DFCIDUMP_MPI)
-endif ()
+include(FetchContent)
+add_subdirectory(dependencies)
 
 
 ########## Targets ##########
 
 add_subdirectory(lib)
 add_subdirectory(test)
+add_subdirectory(example)
 
 
 ########## Documentation ##########

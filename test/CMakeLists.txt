@@ -1,17 +1,12 @@
 enable_testing()
 
-configure_file(rhf.fcidump ${CMAKE_CURRENT_BINARY_DIR}/rhf.fcidump COPYONLY)
-configure_file(uhf.fcidump ${CMAKE_CURRENT_BINARY_DIR}/uhf.fcidump COPYONLY)
-configure_file(testcpp.cpp ${CMAKE_CURRENT_BINARY_DIR}/testc.c COPYONLY)
+FetchContent_GetProperties(googletest_dep)
+if (NOT googletest_dep_POPULATED)
+    FetchContent_Populate(googletest_dep)
+    add_subdirectory(${googletest_dep_SOURCE_DIR} ${googletest_dep_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif ()
 
-add_executable(testcpp testcpp.cpp)
-add_executable(testc ${CMAKE_CURRENT_BINARY_DIR}/testc.c)
-add_executable(testf testf.F90)
+add_executable(testFCIdump testFCIdump.cpp)
+target_link_libraries(testFCIdump PUBLIC FCIdump gmock_main)
 
-target_link_libraries(testcpp PUBLIC FCIdump)
-target_link_libraries(testc PUBLIC FCIdump)
-target_link_libraries(testf PUBLIC FCIdump)
-
-add_test(NAME testcpp COMMAND testcpp)
-add_test(NAME testc COMMAND testc)
-add_test(NAME testf COMMAND testf)
+add_test(NAME testFCIdump COMMAND testFCIdump)

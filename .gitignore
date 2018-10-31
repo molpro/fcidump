@@ -6,6 +6,7 @@ Makefile
 cmake_install.cmake
 CMakeLists.txt.user*
 build/
+cmake-build-*/
 Doxyfile
 html/
 latex/
@@ -16,4 +17,5 @@ testf
 testc.c
 libFCIdump.a
 *.mod
-.idea
+.idea/
+dependencies/*/
