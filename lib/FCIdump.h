@@ -35,7 +35,7 @@ class FCIdump {
      * \param filename The file containing the FCIDUMP data
      * \param old The file must pre-exist
      */
-  explicit FCIdump(std::string filename, bool old = false);
+  explicit FCIdump(std::string filename="", bool old = false);
 
   ~FCIdump();
 
