@@ -1,7 +1,37 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(FCIdump C CXX Fortran)
+project(FCIdump C CXX)
 set(CMAKE_CXX_STANDARD 14)
+option(FCIDUMP_FORTRAN "Whether to build symmetry_matrix fortran binding" ON)
+
+if (FCIDUMP_FORTRAN)
+    enable_language(Fortran)
+endif ()
+
+########## Compiler Flags ##########
+
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-Wall" _Wall)
+if (_Wall)
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+endif ()
+
+if (CMAKE_Fortran_COMPILER_ID)
+    message("Configuring Fortran support for ${CMAKE_CURRENT_SOURCE_DIR}")
+    include(CheckFortranCompilerFlag)
+    foreach (f "-fdefault-integer-8" "-i8")
+        CHECK_Fortran_COMPILER_FLAG(${f} _fortran_flags)
+        if (_fortran_flags)
+            set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${f}")
+        endif ()
+        unset(_fortran_flags CACHE)
+    endforeach ()
+    CHECK_Fortran_COMPILER_FLAG("-Wall" _Wallf)
+    if (_Wallf)
+        set(CMAKE_Fortran_FLAGS_DEBUG "${CMAKE_Fortran_FLAGS_DEBUG} -Wall")
+    endif ()
+endif ()
+
 
 include(FetchContent)
 add_subdirectory(dependencies)
@@ -24,10 +54,11 @@ if (DOXYGEN_FOUND)
     SET(doxy_html_index_file ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
     SET(doxy_input ${SRCS})
     CONFIGURE_FILE(${doxyfile_in} ${doxyfile} @ONLY)
+    file(GLOB headers lib/*.h lib/*.F90)
     ADD_CUSTOM_COMMAND(OUTPUT ${doxy_html_index_file}
             COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
             MAIN_DEPENDENCY ${doxyfile} ${doxyfile_in}
-            DEPENDS ${SRCS}
+            DEPENDS ${headers}
             COMMENT "Generating API documentation with Doxygen" VERBATIM)
     ADD_CUSTOM_TARGET(FCIdump-doc ALL DEPENDS ${doxy_html_index_file})
 endif (DOXYGEN_FOUND)

@@ -204,7 +204,7 @@ std::vector<char> FCIdump::bytestream(bool integrals) const {
       struct {
         int16_t labels[4];
         double value;
-      } s = {0, 0, 0, 0};
+      } s = {{0, 0, 0, 0}};
       char buf[16];
     } u;
     while (nextIntegral(i, j, k, l, u.s.value) != endOfFile) {

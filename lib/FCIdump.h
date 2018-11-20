@@ -241,8 +241,8 @@ class FCIdump {
   int orbital_number(off_t symmetry, off_t offset) const { return orbital_numbers[symmetry][offset]; }
 
  private:
-  std::string namelistData;
   std::string _fileName;
+  std::string namelistData;
   mutable std::ifstream stream;
   mutable std::ofstream outputStream;
   mutable bool uhf;
