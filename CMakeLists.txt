@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(FCIdump C CXX)
 set(CMAKE_CXX_STANDARD 14)
-option(FCIDUMP_FORTRAN "Whether to build symmetry_matrix fortran binding" ON)
+option(FCIDUMP_FORTRAN "Whether to build FCIdump fortran binding" ON)
 
 if (FCIDUMP_FORTRAN)
     enable_language(Fortran)
