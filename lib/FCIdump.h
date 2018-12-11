@@ -210,14 +210,14 @@ class FCIdump {
    * @param value numerical value of the integral
    * @return
    */
-  integralType nextIntegral(ptrdiff_t& symi,
-                            ptrdiff_t& i,
-                            ptrdiff_t& symj,
-                            ptrdiff_t& j,
-                            ptrdiff_t& symk,
-                            ptrdiff_t& k,
-                            ptrdiff_t& syml,
-                            ptrdiff_t& l,
+  integralType nextIntegral(unsigned int& symi,
+                            size_t& i,
+                            unsigned int& symj,
+                            size_t& j,
+                            unsigned int& symk,
+                            size_t& k,
+                            unsigned int& syml,
+                            size_t& l,
                             double& value) const;
   std::string data() const { return namelistData; }
 
