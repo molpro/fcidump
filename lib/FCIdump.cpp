@@ -253,14 +253,14 @@ FCIdump::integralType FCIdump::nextIntegral(int& i, int& j, int& k, int& l, doub
   return result;
 }
 
-FCIdump::integralType FCIdump::nextIntegral(off_t& symi,
-                                            off_t& i,
-                                            off_t& symj,
-                                            off_t& j,
-                                            off_t& symk,
-                                            off_t& k,
-                                            off_t& syml,
-                                            off_t& l,
+FCIdump::integralType FCIdump::nextIntegral(ptrdiff_t& symi,
+                                            ptrdiff_t& i,
+                                            ptrdiff_t& symj,
+                                            ptrdiff_t& j,
+                                            ptrdiff_t& symk,
+                                            ptrdiff_t& k,
+                                            ptrdiff_t& syml,
+                                            ptrdiff_t& l,
                                             double& value) const {
   int ii, jj, kk, ll;
   auto result = nextIntegral(ii, jj, kk, ll, value);

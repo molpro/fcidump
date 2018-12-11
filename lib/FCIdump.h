@@ -1,6 +1,7 @@
 #ifndef FCIDUMP_H
 #define FCIDUMP_H
 #ifdef __cplusplus
+#include <cstddef>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -209,14 +210,14 @@ class FCIdump {
    * @param value numerical value of the integral
    * @return
    */
-  integralType nextIntegral(off_t& symi,
-                            off_t& i,
-                            off_t& symj,
-                            off_t& j,
-                            off_t& symk,
-                            off_t& k,
-                            off_t& syml,
-                            off_t& l,
+  integralType nextIntegral(ptrdiff_t& symi,
+                            ptrdiff_t& i,
+                            ptrdiff_t& symj,
+                            ptrdiff_t& j,
+                            ptrdiff_t& symk,
+                            ptrdiff_t& k,
+                            ptrdiff_t& syml,
+                            ptrdiff_t& l,
                             double& value) const;
   std::string data() const { return namelistData; }
 
