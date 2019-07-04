@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(FCIdump C CXX)
+project(FCIdump VERSION 1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 14)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     option(FCIDUMP_FORTRAN "Whether to build fortran binding" ON)
