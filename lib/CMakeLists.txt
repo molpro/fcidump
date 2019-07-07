@@ -8,3 +8,4 @@ add_library(FCIdump FCIdump.cpp FCIdump.h ${FCIDUMP_FORTRAN_SRCS})
 #target_include_directories(FCIdump INTERFACE ${PROJECT_BINARY_DIR}/lib)
 
 include(libconfig.cmake)
+configure_library(${PROJECT_NAME} "${DEPENDENCIES}")
