@@ -8,6 +8,10 @@ endif ()
 if (FCIDUMP_FORTRAN)
     enable_language(Fortran)
 endif ()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(libconfig)
+
 
 ########## Compiler Flags ##########
 
@@ -34,13 +38,13 @@ if (CMAKE_Fortran_COMPILER_ID)
 endif ()
 
 
-include(FetchContent)
 add_subdirectory(dependencies)
 
 
 ########## Targets ##########
 
 add_subdirectory(lib)
+enable_testing()
 add_subdirectory(test)
 add_subdirectory(example)
 
