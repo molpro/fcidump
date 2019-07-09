@@ -72,9 +72,13 @@ TEST(testFCIdump, basic) {
     {
       double value;
       off_t is, js, ks, ls, io, jo, ko, lo;
+      unsigned int isu, jsu, ksu, lsu;
+      size_t ios, jos, kos, los;
       dump.rewind();
       for (const auto& labels : integrals) {
-        auto type = dump.nextIntegral(is, io, js, jo, ks, ko, ls, lo, value);
+        auto type = dump.nextIntegral(isu, ios, jsu, jos, ksu, kos, lsu, los, value);
+        is=isu; js=jsu; ks=ksu; ls=lsu;
+        io=ios; jo=jos; ko=kos; lo=los;
         ASSERT_NE(type, FCIdump::endOfFile);
         ASSERT_THAT(value, DoubleNear(testvalue(labels[0], labels[1], labels[2], labels[3]), 1e-12));
         if (is < 8 && ks < 8)
@@ -92,7 +96,7 @@ TEST(testFCIdump, basic) {
                           dump.orbital_symmetry(labels[1]), dump.orbital_offset(labels[1])
                       }));
       }
-      auto type = dump.nextIntegral(is, io, js, jo, ks, ko, ls, lo, value);
+      auto type = dump.nextIntegral(isu, ios, jsu, jos, ksu, kos, lsu, los, value);
       ASSERT_EQ(type, FCIdump::endOfFile);
     }
   }

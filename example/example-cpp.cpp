@@ -67,7 +67,8 @@ int main(int argc, char* argv[])
           std::cout << "found " <<
                     "scalar integral " << value << std::endl;
       }
-      off_t is, io, js, jo, ks, ko, ls, lo;
+      unsigned int is, js, ks, ls;
+      size_t io, jo, ko, lo;
       dump.rewind();
       while ((type = dump.nextIntegral(is, io, js, jo, ks, ko, ls, lo, value)) != FCIdump::endOfFile) {
 //        std::cout <<" integral ("<<io+1<<"."<<is+1<<" "<<jo+1<<"."<<js+1<<"|"<<ko+1<<"."<<ks+1<<" "<<lo+1<<"."<<ls+1<<")="<<value <<std::endl;
