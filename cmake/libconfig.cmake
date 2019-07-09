@@ -7,6 +7,7 @@ include(FetchContent)
 # The node in the git repository is specified separately in the file
 # ${CMAKE_SOURCE_DIR}/dependencies/${NAME}_SHA1
 function(declare_dependency NAME URL)
+    set(_private_dependency_${NAME}_directory "${CMAKE_CURRENT_SOURCE_DIR}" CACHE INTERNAL "dependency directory for ${NAME}")
     get_dependency_name(${NAME})
     file(STRINGS "${_SHA_file}" GIT_TAG)
     message(STATUS "Declare dependency NAME=${NAME} URL=${URL} TAG=${GIT_TAG} DEPENDENCY=${_dependency_name}")
@@ -33,13 +34,13 @@ function(get_dependency name)
     if (NOT ${_dependency_name}_POPULATED)
         file(LOCK "${CMAKE_SOURCE_DIR}/dependencies/.${name}_lockfile" GUARD FILE TIMEOUT 1000)
         FetchContent_Populate(${_dependency_name})
-        file(LOCK "${CMAKE_SOURCE_DIR}/dependencies/.${name}_lockfile" RELEASE)
-    endif ()
-    if (ARGV1 OR (NOT DEFINED ARGV1))
-        if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.15)
-            message(VERBOSE "add_subdirectory() for get_dependency ${name}")
+        if (ARGV1 OR (NOT DEFINED ARGV1))
+            if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.15)
+                message(VERBOSE "add_subdirectory() for get_dependency ${name}")
+            endif ()
+            add_subdirectory(${${_dependency_name}_SOURCE_DIR} ${${_dependency_name}_BINARY_DIR} EXCLUDE_FROM_ALL)
         endif ()
-        add_subdirectory(${${_dependency_name}_SOURCE_DIR} ${${_dependency_name}_BINARY_DIR} EXCLUDE_FROM_ALL)
+        file(LOCK "${CMAKE_SOURCE_DIR}/dependencies/.${name}_lockfile" RELEASE)
     endif ()
     foreach (s SOURCE_DIR BINARY_DIR POPULATED)
         set(${_dependency_name}_${s} "${${_dependency_name}_${s}}" PARENT_SCOPE)
@@ -114,6 +115,7 @@ function(configure_library LIBRARY_NAME DEPENDENCIES)
             PUBLIC_HEADER DESTINATION include
             )
     foreach (dep ${DEPENDENCIES})
+        message(STATUS "install(TARGETS ${dep} EXPORT ${LIBRARY_NAME}Targets ...)")
         install(TARGETS ${dep} EXPORT ${LIBRARY_NAME}Targets LIBRARY DESTINATION lib
                 ARCHIVE DESTINATION lib
                 RUNTIME DESTINATION bin
@@ -233,6 +235,6 @@ endfunction()
 
 function(get_dependency_name dep)
     set(_dependency_name _private_dep_${dep} PARENT_SCOPE)
-    set(_SHA_file "${CMAKE_SOURCE_DIR}/dependencies/${dep}_SHA1" PARENT_SCOPE)
+    set(_SHA_file "${_private_dependency_${NAME}_directory}/${dep}_SHA1" PARENT_SCOPE)
 endfunction()
 
