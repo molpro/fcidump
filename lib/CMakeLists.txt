@@ -1,3 +1,4 @@
+unset(DEPENDENCIES)
 if (CMAKE_Fortran_COMPILER_ID)
     set(FCIDUMP_FORTRAN_SRCS "FCIdumpF.F90")
 endif ()
