@@ -17,12 +17,13 @@ job:
     - git clean -f src lib test
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
 
-image: alpine:latest
+#image: alpine:latest
+image: pjknowles/opensuse
 
 pages:
   stage: deploy
   script:
-    - rsync -a build/html/ public
+    - rsync -a --delete build/html/ public
   artifacts:
     paths:
       - public
