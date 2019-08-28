@@ -23,6 +23,7 @@ image: pjknowles/opensuse
 pages:
   stage: deploy
   script:
+    - ls -ltr
     - rsync -a --delete build/html/ public
   artifacts:
     paths:
