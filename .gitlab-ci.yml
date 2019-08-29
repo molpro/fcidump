@@ -6,7 +6,7 @@ cache:
     - test
     - CMakeLists.txt
     - Doxyfile.in
-    - public
+    - build
 job:
   image: pjknowles/opensuse
   script:
