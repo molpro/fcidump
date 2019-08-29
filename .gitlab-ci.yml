@@ -15,7 +15,7 @@ job:
     - TOP=$PWD
     - git checkout $CI_COMMIT_SHA # because of cache
     - git reset --hard
-    - git clean -f src lib test
+    - git clean -f src lib test dependencies
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
 
 #image: alpine:latest
