@@ -2,8 +2,9 @@ cache:
   key: ${CI_PROJECT_NAME}
   paths:
     - public
-job:
-  image: pjknowles/opensuse
+image: pjknowles/opensuse
+
+build:
   script:
     - procs=$(lscpu -p | egrep -v '^#' | wc -l || echo 1); echo $procs processors available
     - TOP=$PWD
@@ -12,9 +13,6 @@ job:
     - git clean -f src lib test dependencies
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
     - rsync -a --delete build/html/ public
-
-#image: alpine:latest
-image: pjknowles/opensuse
 
 pages:
   stage: deploy
