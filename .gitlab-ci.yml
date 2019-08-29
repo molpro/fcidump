@@ -2,7 +2,8 @@ cache:
   key: ${CI_PROJECT_NAME}
   paths: # cache everything so that unnecessary recompilation is avoided
     - lib
-    - src
+    - cmake
+    - example
     - test
     - CMakeLists.txt
     - Doxyfile.in
@@ -23,7 +24,6 @@ image: pjknowles/opensuse
 pages:
   stage: deploy
   script:
-    - ls -ltr
     - rsync -a --delete build/html/ public
   artifacts:
     paths:
