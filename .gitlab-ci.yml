@@ -13,9 +13,13 @@ job:
   script:
     - procs=$(lscpu -p | egrep -v '^#' | wc -l || echo 1); echo $procs processors available
     - TOP=$PWD
+    - ls -lR dependencies
     - git checkout $CI_COMMIT_SHA # because of cache
+    - ls -lR dependencies
     - git reset --hard
+    - ls -lR dependencies
     - git clean -f src lib test dependencies
+    - ls -lR dependencies
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
 
 #image: alpine:latest
