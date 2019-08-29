@@ -14,6 +14,7 @@ job:
     - procs=$(lscpu -p | egrep -v '^#' | wc -l || echo 1); echo $procs processors available
     - TOP=$PWD
     - ls -lR dependencies
+    - ls -lR build
     - git checkout $CI_COMMIT_SHA # because of cache
     - ls -lR dependencies
     - git reset --hard
