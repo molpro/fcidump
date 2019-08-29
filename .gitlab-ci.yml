@@ -1,13 +1,7 @@
 cache:
   key: ${CI_PROJECT_NAME}
-  paths: # cache everything so that unnecessary recompilation is avoided
-    - lib
-    - cmake
-    - example
-    - test
-    - CMakeLists.txt
-    - Doxyfile.in
-    - build
+  paths:
+    - public
 job:
   image: pjknowles/opensuse
   script:
@@ -17,6 +11,7 @@ job:
     - git reset --hard
     - git clean -f src lib test dependencies
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
+    - rsync -a --delete build/html/ public
 
 #image: alpine:latest
 image: pjknowles/opensuse
@@ -24,7 +19,7 @@ image: pjknowles/opensuse
 pages:
   stage: deploy
   script:
-    - rsync -a --delete build/html/ public
+    - echo nothing
   artifacts:
     paths:
       - public
