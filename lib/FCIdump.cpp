@@ -276,10 +276,16 @@ FCIdump::integralType FCIdump::nextIntegral(unsigned int& symi,
       k = orbital_offsets[kk - 1];
       syml = orbital_symmetries[ll - 1];
       l = orbital_offsets[ll - 1];
-    } else
+    } else {
       symk = 8;
-  } else
+      syml = 8;
+      k = l = 0;
+    }
+  } else {
     symi = 8;
+    symj = 8;
+    i = j = 0;
+  }
 //  std::cout << "symi="<<symi<<std::endl;
 //  std::cout << "symk="<<symk<<std::endl;
 //  std::cout << "result="<<result<<std::endl;
