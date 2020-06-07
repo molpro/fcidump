@@ -7,6 +7,7 @@ build:
   script:
     - procs=$(lscpu -p | egrep -v '^#' | wc -l || echo 1); echo $procs processors available
     - TOP=$PWD
+    - PROJECT_NAME=FCIdump
     - git checkout $CI_COMMIT_SHA # because of cache
     - git reset --hard
     - git clean -f src molpro test dependencies
