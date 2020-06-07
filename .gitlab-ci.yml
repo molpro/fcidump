@@ -2,8 +2,7 @@ cache:
   key: ${CI_PROJECT_NAME}
   paths:
     - public
-image: pjknowles/opensuse
-
+image: ${CI_REGISTRY}/molpro/${CI_PROJECT_NAME}
 build:
   script:
     - procs=$(lscpu -p | egrep -v '^#' | wc -l || echo 1); echo $procs processors available
@@ -12,7 +11,12 @@ build:
     - git reset --hard
     - git clean -f src molpro test dependencies
     - cd $TOP; BUILD=build; mkdir -p $BUILD && cd $BUILD && pwd && cmake -DMPIOPTIONS="--allow-run-as-root" $TOP ; cmake --build . -- -j ${procs} ; cd test;  ctest -V -j ${procs}
-    - rsync -a --delete $TOP/build/html/ $TOP/public
+    - mkdir -p $TOP/public
+    - mkdir -p $TOP/$BUILD/docs/$PROJECT_NAME/html/DoxygenTagFiles && cp $TOP/$BUILD/docs/$PROJECT_NAME/$PROJECT_NAME.tag $TOP/$BUILD/docs/$PROJECT_NAME/html/DoxygenTagFiles
+    - . $TOP/$BUILD/project_version.sh ; rsync -a --delete $TOP/$BUILD/docs/*/html/ $TOP/public/${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    - rm -f  $TOP/public/${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}/${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    - if [ $(git describe --tags --abbrev=0 --always HEAD) = $(git describe --tags --abbrev=0 --always origin/master) ]; then cd $TOP/public; rm -f latest; ln -s ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR} latest ; rm -f ./index.html; fi
+    - echo '<head><meta http-equiv="refresh" content="0; URL=latest"></head>' > $TOP/public/index.html
 
 pages:
   stage: deploy
@@ -21,6 +25,6 @@ pages:
   artifacts:
     paths:
       - public
-#  only:
-#    - master
+  only:
+    - tags
 
