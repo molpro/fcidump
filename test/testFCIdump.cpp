@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdio>
 
-#include "FCIdump.h"
+#include "molpro/FCIdump.h"
 
 static double testvalue(int i, int j, int k, int l) {
   auto ij = std::max(i, j) * (std::max(i, j) + 1) / 2 + std::min(i, j);
