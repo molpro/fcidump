@@ -1,4 +1,4 @@
-#include "FCIdump.h"
+#include "molpro/FCIdump.h"
 
 #ifdef __cplusplus
 #include <iostream>
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
     if (parallel_rank == 0) {
 #ifdef __cplusplus
       std::cout << std::endl << "Process file " << files[ifile] << std::endl;
-      FCIdump dump(files[ifile]);
+      molpro::FCIdump dump(files[ifile]);
       std::vector<int> NELEC = dump.parameter("NELEC");
       std::cout << "NELEC=" << NELEC[0] << std::endl;
       std::vector<int> MS2 = dump.parameter("MS2");
@@ -51,50 +51,50 @@ int main(int argc, char* argv[])
       std::cout << std::endl;
       int i, j, k, l;
       double value;
-      FCIdump::integralType type;
+      molpro::FCIdump::integralType type;
       dump.rewind();
-      while ((type = dump.nextIntegral(i, j, k, l, value)) != FCIdump::endOfFile) {
+      while ((type = dump.nextIntegral(i, j, k, l, value)) != molpro::FCIdump::endOfFile) {
         if (i == twoelectron[0] && j == twoelectron[1] && k == twoelectron[2] && l == twoelectron[3])
           std::cout << "found " <<
-                    ((type != FCIdump::I2bb) ? "alpha" : "beta") << "-" <<
-                    ((type == FCIdump::I2aa) ? "alpha" : "beta") <<
+                    ((type != molpro::FCIdump::I2bb) ? "alpha" : "beta") << "-" <<
+                    ((type == molpro::FCIdump::I2aa) ? "alpha" : "beta") <<
                     " integral (" << i << j << "|" << k << l << ")=" << value << std::endl;
         else if (i == oneelectron[0] && j == oneelectron[1] && k == 0 && l == 0)
           std::cout << "found " <<
-                    ((type != FCIdump::I1b) ? "alpha" : "beta") <<
+                    ((type != molpro::FCIdump::I1b) ? "alpha" : "beta") <<
                     " integral <" << i << "|h|" << j << ">=" << value << std::endl;
-        else if (type == FCIdump::I0)
+        else if (type == molpro::FCIdump::I0)
           std::cout << "found " <<
                     "scalar integral " << value << std::endl;
       }
       unsigned int is, js, ks, ls;
       size_t io, jo, ko, lo;
       dump.rewind();
-      while ((type = dump.nextIntegral(is, io, js, jo, ks, ko, ls, lo, value)) != FCIdump::endOfFile) {
+      while ((type = dump.nextIntegral(is, io, js, jo, ks, ko, ls, lo, value)) != molpro::FCIdump::endOfFile) {
 //        std::cout <<" integral ("<<io+1<<"."<<is+1<<" "<<jo+1<<"."<<js+1<<"|"<<ko+1<<"."<<ks+1<<" "<<lo+1<<"."<<ls+1<<")="<<value <<std::endl;
-//        std::cout << "type "<<type<<FCIdump::endOfRecord<<std::endl;
-//        if (type == FCIdump::endOfRecord) continue;
-//        std::cout << "type "<<type<<FCIdump::I1a<<FCIdump::I1b<<std::endl;
-        if ((type == FCIdump::I2aa || type == FCIdump::I2ab || type == FCIdump::I2bb)
+//        std::cout << "type "<<type<<molpro::FCIdump::endOfRecord<<std::endl;
+//        if (type == molpro::FCIdump::endOfRecord) continue;
+//        std::cout << "type "<<type<<molpro::FCIdump::I1a<<molpro::FCIdump::I1b<<std::endl;
+        if ((type == molpro::FCIdump::I2aa || type == molpro::FCIdump::I2ab || type == molpro::FCIdump::I2bb)
             && dump.orbital_number(is, io) == twoelectron[0]
             && dump.orbital_number(js, jo) == twoelectron[1]
             && dump.orbital_number(ks, ko) == twoelectron[2]
             && dump.orbital_number(ls, lo) == twoelectron[3]
             )
           std::cout << "found " <<
-                    ((type != FCIdump::I2bb) ? "alpha" : "beta") << "-" <<
-                    ((type == FCIdump::I2aa) ? "alpha" : "beta") <<
+                    ((type != molpro::FCIdump::I2bb) ? "alpha" : "beta") << "-" <<
+                    ((type == molpro::FCIdump::I2aa) ? "alpha" : "beta") <<
                     " integral (" << io + 1 << "." << is + 1 << " " << jo + 1 << "." << js + 1 << "|" << ko + 1 << "."
                     << ks + 1 << " " << lo + 1 << "." << ls + 1 << ")=" << value << std::endl;
-        else if ((type == FCIdump::I1a || type == FCIdump::I1b)
+        else if ((type == molpro::FCIdump::I1a || type == molpro::FCIdump::I1b)
             && dump.orbital_number(is, io) == oneelectron[0]
             && dump.orbital_number(js, jo) == oneelectron[1]
             )
           std::cout << "found " <<
-                    ((type != FCIdump::I1b) ? "alpha" : "beta") <<
+                    ((type != molpro::FCIdump::I1b) ? "alpha" : "beta") <<
                     " integral <" << io + 1 << "." << is + 1 << "|h|" << jo + 1 << "." << js + 1 << ">=" << value
                     << std::endl;
-        else if (type == FCIdump::I0)
+        else if (type == molpro::FCIdump::I0)
           std::cout << "found " <<
                     "scalar integral " << value << std::endl;
       }
