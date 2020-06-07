@@ -5,12 +5,13 @@ endif ()
 
 configure_file(rhf.fcidump ${CMAKE_CURRENT_BINARY_DIR}/rhf.fcidump COPYONLY)
 configure_file(uhf.fcidump ${CMAKE_CURRENT_BINARY_DIR}/uhf.fcidump COPYONLY)
-configure_file(example-cpp.cpp ${CMAKE_CURRENT_BINARY_DIR}/example-c.c COPYONLY)
 
 add_executable(example-cpp example-cpp.cpp)
+target_link_libraries(example-cpp PUBLIC FCIdump)
+
+configure_file(example-cpp.cpp ${CMAKE_CURRENT_BINARY_DIR}/example-c.c COPYONLY)
 add_executable(example-c ${CMAKE_CURRENT_BINARY_DIR}/example-c.c)
 
-target_link_libraries(example-cpp PUBLIC FCIdump)
 target_link_libraries(example-c PUBLIC FCIdump)
 
 if (FORTRAN)

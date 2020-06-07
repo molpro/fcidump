@@ -5,7 +5,7 @@
 #define _GNU_SOURCE
 #endif
 #endif
-#include "FCIdump.h"
+#include "molpro/FCIdump.h"
 #include <iostream>
 #include <fstream>
 #include <istream>
@@ -13,7 +13,7 @@
 #include <stdexcept>
 #define xout std::cout
 
-FCIdump::FCIdump(std::string filename, bool old)
+molpro::FCIdump::FCIdump(std::string filename, bool old)
     : _fileName(std::move(filename)), namelistData(",")  {
   if (_fileName.empty()) return;
   std::ifstream s;
@@ -35,19 +35,19 @@ FCIdump::FCIdump(std::string filename, bool old)
 //  xout <<"namelistData=" <<namelistData <<std::endl;
 }
 
-FCIdump::FCIdump(std::vector<char> bytestream) {
+molpro::FCIdump::FCIdump(std::vector<char> bytestream) {
   throw std::logic_error("Unimplemented function");
 }
 
-FCIdump::~FCIdump() {
+molpro::FCIdump::~FCIdump() {
   if (outputStream.is_open()) outputStream.close();
 }
 
-std::string FCIdump::fileName() const {
+std::string molpro::FCIdump::fileName() const {
   return _fileName;
 }
 
-std::vector<int> FCIdump::parameter(const std::string& key,
+std::vector<int> molpro::FCIdump::parameter(const std::string& key,
                                     const std::vector<int>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<int> answer;
   std::vector<std::string> strings = parameter(key, std::vector<std::string>(1, " "));
@@ -61,7 +61,7 @@ std::vector<int> FCIdump::parameter(const std::string& key,
   return answer;
 }
 
-std::vector<double> FCIdump::parameter(const std::string& key,
+std::vector<double> molpro::FCIdump::parameter(const std::string& key,
                                        const std::vector<double>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<double> answer;
   std::vector<std::string> strings = parameter(key, std::vector<std::string>(1, " "));
@@ -75,7 +75,7 @@ std::vector<double> FCIdump::parameter(const std::string& key,
   return answer;
 }
 
-std::vector<std::string> FCIdump::parameter(const std::string& key,
+std::vector<std::string> molpro::FCIdump::parameter(const std::string& key,
                                             const std::vector<std::string>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<std::string> answer;
   size_t pos = namelistData.find("," + key + "=");
@@ -90,15 +90,15 @@ std::vector<std::string> FCIdump::parameter(const std::string& key,
   return answer;
 }
 
-void FCIdump::addParameter(const std::string& key, const std::vector<std::string>& values) {
-//  xout << "FCIdump::addParameter namelistData originally "<<namelistData<<std::endl;
+void molpro::FCIdump::addParameter(const std::string& key, const std::vector<std::string>& values) {
+//  xout << "molpro::FCIdump::addParameter namelistData originally "<<namelistData<<std::endl;
   namelistData.erase(0, 1);
   for (auto s = values.rbegin(); s != values.rend(); s++)
     namelistData.insert(0, (*s) + ",");
   namelistData.insert(0, "," + key + "=");
-//  xout << "FCIdump::addParameter namelistData set to "<<namelistData<<std::endl;
+//  xout << "molpro::FCIdump::addParameter namelistData set to "<<namelistData<<std::endl;
 }
-void FCIdump::addParameter(const std::string& key, const std::vector<int>& values) {
+void molpro::FCIdump::addParameter(const std::string& key, const std::vector<int>& values) {
   std::vector<std::string> valuess;
   for (const auto& v: values) {
     std::ostringstream ss;
@@ -107,7 +107,7 @@ void FCIdump::addParameter(const std::string& key, const std::vector<int>& value
   }
   addParameter(key, valuess);
 }
-void FCIdump::addParameter(const std::string& key, const std::vector<double>& values) {
+void molpro::FCIdump::addParameter(const std::string& key, const std::vector<double>& values) {
   std::vector<std::string> valuess;
   for (const auto& v : values) {
     std::ostringstream ss;
@@ -116,17 +116,17 @@ void FCIdump::addParameter(const std::string& key, const std::vector<double>& va
   }
   addParameter(key, valuess);
 }
-void FCIdump::addParameter(const std::string& key, const std::string& value) {
+void molpro::FCIdump::addParameter(const std::string& key, const std::string& value) {
   addParameter(key, std::vector<std::string>(1, value));
 }
-void FCIdump::addParameter(const std::string& key, const int& value) {
+void molpro::FCIdump::addParameter(const std::string& key, const int& value) {
   addParameter(key, std::vector<int>(1, value));
 }
-void FCIdump::addParameter(const std::string& key, const double& value) {
+void molpro::FCIdump::addParameter(const std::string& key, const double& value) {
   addParameter(key, std::vector<double>(1, value));
 }
 
-void FCIdump::rewind() const {
+void molpro::FCIdump::rewind() const {
   stream.open(_fileName.c_str());
   std::string ss;
   while (stream >> ss && ss != "&END" && ss != "/");
@@ -161,10 +161,10 @@ void FCIdump::rewind() const {
 }
 
 #include <iomanip>
-bool FCIdump::write(std::string filename, fileType type, bool integrals) {
+bool molpro::FCIdump::write(std::string filename, fileType type, bool integrals) {
   outputStream.open((filename=="" ? this->_fileName : filename).c_str());
   if ((outputStream.rdstate() & std::ifstream::failbit) != 0) {
-    xout << "FCIdump::write failed to open " << filename << std::endl;
+    xout << "molpro::FCIdump::write failed to open " << filename << std::endl;
     outputStream.close();
     return false;
   }
@@ -193,7 +193,7 @@ bool FCIdump::write(std::string filename, fileType type, bool integrals) {
 }
 
 #include <stdint.h>
-std::vector<char> FCIdump::bytestream(bool integrals) const {
+std::vector<char> molpro::FCIdump::bytestream(bool integrals) const {
   std::vector<char> result;
   for (std::string::const_iterator s = namelistData.begin(); s != namelistData.end(); s++)
     result.push_back(*s);
@@ -218,11 +218,11 @@ std::vector<char> FCIdump::bytestream(bool integrals) const {
   return result;
 }
 
-void FCIdump::writeIntegral(int i, int j, int k, int l, double value) const {
+void molpro::FCIdump::writeIntegral(int i, int j, int k, int l, double value) const {
   outputStream << value << " " << i << " " << j << " " << k << " " << l << std::endl;
 }
 
-FCIdump::integralType FCIdump::nextIntegral(int& i, int& j, int& k, int& l, double& value) const {
+molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(int& i, int& j, int& k, int& l, double& value) const {
   integralType result = *currentState;
   if (stream >> value) {
     stream >> i;
@@ -244,16 +244,16 @@ FCIdump::integralType FCIdump::nextIntegral(int& i, int& j, int& k, int& l, doub
 //      xout << "real scalar signalled"<<std::endl;
       result = I0;
     }
-  } else if (k == 0 && (*currentState != FCIdump::I1a && *currentState != FCIdump::I1b)) {
+  } else if (k == 0 && (*currentState != molpro::FCIdump::I1a && *currentState != molpro::FCIdump::I1b)) {
 //    xout << "special state switch to "<<*(currentState+1)<<std::endl;
-    result = (*currentState == FCIdump::I2aa) ? FCIdump::I1a : FCIdump::endOfRecord;
+    result = (*currentState == molpro::FCIdump::I2aa) ? molpro::FCIdump::I1a : molpro::FCIdump::endOfRecord;
     ++currentState;
   }
-//  xout << "FCIdump::nextIntegral i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
+//  xout << "molpro::FCIdump::nextIntegral i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
   return result;
 }
 
-FCIdump::integralType FCIdump::nextIntegral(unsigned int& symi,
+molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(unsigned int& symi,
                                             size_t& i,
                                             unsigned int& symj,
                                             size_t& j,
@@ -264,7 +264,7 @@ FCIdump::integralType FCIdump::nextIntegral(unsigned int& symi,
                                             double& value) const {
   int ii, jj, kk, ll;
   auto result = nextIntegral(ii, jj, kk, ll, value);
-  if (result == FCIdump::endOfFile) return result;
+  if (result == molpro::FCIdump::endOfFile) return result;
 //  std::cout << "nextIntegral "<<ii<<jj<<kk<<ll<<" "<<value<<std::endl;
   if (ii > 0) {
     symi = orbital_symmetries[ii - 1];
@@ -292,11 +292,11 @@ FCIdump::integralType FCIdump::nextIntegral(unsigned int& symi,
   return result;
 }
 
-FCIdump* dump;
+molpro::FCIdump* dump;
 
 void FCIdumpInitialise(char* filename) {
 //  printf("Initialise FCIDUMP from file %s\n",filename);
-  dump = new FCIdump(std::string(filename));
+  dump = new molpro::FCIdump(std::string(filename));
 }
 
 #include <cstring>
@@ -330,7 +330,7 @@ void FCIdumpRewind() {
 int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value) {
   int ii, jj, kk, ll;
   double vv;
-  FCIdump::integralType type = dump->nextIntegral(ii, jj, kk, ll, vv);
+  molpro::FCIdump::integralType type = dump->nextIntegral(ii, jj, kk, ll, vv);
   *i = ii;
   *j = jj;
   *k = kk;
@@ -362,7 +362,7 @@ void FCIdumpAddParameterF(char* key, double values[], int n) {
 }
 
 int FCIdumpWrite(char* filename, int type) {
-  return dump->write(std::string(filename), (FCIdump::fileType) type) ? 1 : 0;
+  return dump->write(std::string(filename), (molpro::FCIdump::fileType) type) ? 1 : 0;
 }
 
 void FCIdumpWriteIntegral(int i, int j, int k, int l, double value) {
