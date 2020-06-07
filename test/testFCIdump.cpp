@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdio>
 
-#include "FCIdump.h"
+#include "molpro/FCIdump.h"
 
 static double testvalue(int i, int j, int k, int l) {
   auto ij = std::max(i, j) * (std::max(i, j) + 1) / 2 + std::min(i, j);
@@ -27,7 +27,7 @@ TEST(testFCIdump, basic) {
   integrals.push_back({1, 1, 0, 0});
   {
     remove(dumpname.c_str());
-    FCIdump dump(dumpname);
+    molpro::FCIdump dump(dumpname);
     dump.addParameter("NORB", int(symmetries.size()));
     dump.addParameter("NELEC", 2);
     dump.addParameter("ISYM", 1);
@@ -42,7 +42,7 @@ TEST(testFCIdump, basic) {
   }
 
   {
-    FCIdump dump(dumpname, true);
+    molpro::FCIdump dump(dumpname, true);
     dump.rewind();
     for (auto sym = 0; sym < 8; sym++) {
       size_t off = 0;
@@ -53,7 +53,7 @@ TEST(testFCIdump, basic) {
   }
 
   {
-    FCIdump dump(dumpname, true);
+    molpro::FCIdump dump(dumpname, true);
     ASSERT_THAT(dump.parameter("ORBSYM"), Pointwise(Eq(), symmetries));
     {
       double value;
@@ -61,12 +61,12 @@ TEST(testFCIdump, basic) {
       dump.rewind();
       for (const auto& labels : integrals) {
         auto type = dump.nextIntegral(i, j, k, l, value);
-        ASSERT_NE(type, FCIdump::endOfFile);
+        ASSERT_NE(type, molpro::FCIdump::endOfFile);
         ASSERT_THAT(value, DoubleNear(testvalue(labels[0], labels[1], labels[2], labels[3]), 1e-12));
         ASSERT_THAT(std::vector<int>({i, j, k, l}), Pointwise(Eq(), labels));
       }
       auto type = dump.nextIntegral(i, j, k, l, value);
-      ASSERT_EQ(type, FCIdump::endOfFile);
+      ASSERT_EQ(type, molpro::FCIdump::endOfFile);
     }
 
     {
@@ -79,7 +79,7 @@ TEST(testFCIdump, basic) {
         auto type = dump.nextIntegral(isu, ios, jsu, jos, ksu, kos, lsu, los, value);
         is=isu; js=jsu; ks=ksu; ls=lsu;
         io=ios; jo=jos; ko=kos; lo=los;
-        ASSERT_NE(type, FCIdump::endOfFile);
+        ASSERT_NE(type, molpro::FCIdump::endOfFile);
         ASSERT_THAT(value, DoubleNear(testvalue(labels[0], labels[1], labels[2], labels[3]), 1e-12));
         if (is < 8 && ks < 8)
           ASSERT_THAT(std::vector<off_t>({is, io, js, jo, ks, ko, ls, lo}),
@@ -97,7 +97,7 @@ TEST(testFCIdump, basic) {
                       }));
       }
       auto type = dump.nextIntegral(isu, ios, jsu, jos, ksu, kos, lsu, los, value);
-      ASSERT_EQ(type, FCIdump::endOfFile);
+      ASSERT_EQ(type, molpro::FCIdump::endOfFile);
     }
   }
 }
