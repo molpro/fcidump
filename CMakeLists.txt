@@ -23,6 +23,6 @@ endif ()
 
 include(DependencyManagerDocs)
 DependencyManagerDocs_Add(${PROJECT_NAME}
-        FILES README.md
+        FILES README.md LICENCE.md
         DOC_URL "https://molpro.gitlab.io/library-template/${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
         )
