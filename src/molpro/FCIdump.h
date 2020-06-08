@@ -6,12 +6,6 @@
 #include <vector>
 #include <fstream>
 /**
- @if MOLPRO
- @page FCIdump FCIdump access through C++, C and Fortran
- @else
- @mainpage FCIdump access through C++, C and Fortran
- @endif
-
  @section Introduction
  This is a C++ class, together with non-object-oriented C and Fortran 90 bindings, that implement access
  to an FCIDUMP file as produced by the Full CI code (Computer Physics Communications
@@ -25,6 +19,7 @@ as well as <a href="http://www.molpro.net/">Molpro</a> via its fci;dump facility
 @author Peter Knowles
 
  */
+namespace molpro {
 
 /*!
  * \brief C++ class that provides access to FCIdump files
@@ -36,7 +31,7 @@ class FCIdump {
      * \param filename The file containing the FCIDUMP data
      * \param old The file must pre-exist
      */
-  explicit FCIdump(std::string filename="", bool old = false);
+  explicit FCIdump(std::string filename = "", bool old = false);
 
   ~FCIdump();
 
@@ -137,7 +132,7 @@ class FCIdump {
    * \param integrals If true, write out the integrals; otherwise leave the file open and positioned ready to write integrals later
    * \return true if OK, false if not
    */
-  bool write(std::string filename="", fileType type = FileFormatted, bool integrals = true);
+  bool write(std::string filename = "", fileType type = FileFormatted, bool integrals = true);
 
   /*!
    * \brief writeIntegral Write an integral to the output stream. write() must already have been called.
@@ -226,13 +221,13 @@ class FCIdump {
    * @param orbital The index of the orbital, counting from 1
    * @return The symmetry, in the range 0-7
    */
-  off_t orbital_symmetry(int orbital) const { return orbital_symmetries[orbital-1]; }
+  off_t orbital_symmetry(int orbital) const { return orbital_symmetries[orbital - 1]; }
   /*!
    * @brief Get the number of previous orbitals of the same symmetry
    * @param orbital The index of the orbital, counting from 1
    * @return The offset
    */
-  off_t orbital_offset(int orbital) const { return orbital_offsets[orbital-1]; }
+  off_t orbital_offset(int orbital) const { return orbital_offsets[orbital - 1]; }
   /*!
    * @brief Get the orbital number for a given symmetry and offset
    * @param symmetry The symmetry of the orbital, in the range 0-7
@@ -255,6 +250,7 @@ class FCIdump {
   mutable std::vector<off_t> orbital_symmetries;
   mutable std::vector<off_t> orbital_offsets;
 };
+}
 #endif
 
 // C binding
