@@ -1,3 +1,5 @@
+FCIdump
+=======
 This is a C++ class, together with non-object-oriented C and Fortran 90 bindings, that implement access
  to an FCIDUMP file as produced by the Full CI code (Computer Physics Communications
 Volume 54, Issue 1, April 1989, Pages 75–83,
