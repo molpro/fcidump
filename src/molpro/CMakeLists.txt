@@ -2,7 +2,7 @@ LibraryManager_Append(${PROJECT_NAME}
         SOURCES FCIdump.cpp
         PUBLIC_HEADER FCIdump.h
         )
-if (CMAKE_Fortran_COMPILER)
+if (FORTRAN)
     LibraryManager_Append(${PROJECT_NAME}
             SOURCES FCIdumpF.F90
             )
