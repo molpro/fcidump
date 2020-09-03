@@ -14,7 +14,7 @@
 #define xout std::cout
 
 molpro::FCIdump::FCIdump(std::string filename, bool old)
-    : _fileName(std::move(filename)), namelistData(",")  {
+    : _fileName(std::move(filename)), namelistData(",") {
   if (_fileName.empty()) return;
   std::ifstream s;
   s.open(_fileName.c_str());
@@ -48,7 +48,7 @@ std::string molpro::FCIdump::fileName() const {
 }
 
 std::vector<int> molpro::FCIdump::parameter(const std::string& key,
-                                    const std::vector<int>& def) const { // dirty sucking in from FCIDUMP namelist
+                                            const std::vector<int>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<int> answer;
   std::vector<std::string> strings = parameter(key, std::vector<std::string>(1, " "));
   if (strings == std::vector<std::string>(1, " ")) return def;
@@ -62,7 +62,7 @@ std::vector<int> molpro::FCIdump::parameter(const std::string& key,
 }
 
 std::vector<double> molpro::FCIdump::parameter(const std::string& key,
-                                       const std::vector<double>& def) const { // dirty sucking in from FCIDUMP namelist
+                                               const std::vector<double>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<double> answer;
   std::vector<std::string> strings = parameter(key, std::vector<std::string>(1, " "));
   if (strings == std::vector<std::string>(1, " ")) return def;
@@ -76,7 +76,7 @@ std::vector<double> molpro::FCIdump::parameter(const std::string& key,
 }
 
 std::vector<std::string> molpro::FCIdump::parameter(const std::string& key,
-                                            const std::vector<std::string>& def) const { // dirty sucking in from FCIDUMP namelist
+                                                    const std::vector<std::string>& def) const { // dirty sucking in from FCIDUMP namelist
   std::vector<std::string> answer;
   size_t pos = namelistData.find("," + key + "=");
   if (pos == std::string::npos) return def;
@@ -162,7 +162,7 @@ void molpro::FCIdump::rewind() const {
 
 #include <iomanip>
 bool molpro::FCIdump::write(std::string filename, fileType type, bool integrals) {
-  outputStream.open((filename=="" ? this->_fileName : filename).c_str());
+  outputStream.open((filename == "" ? this->_fileName : filename).c_str());
   if ((outputStream.rdstate() & std::ifstream::failbit) != 0) {
     xout << "molpro::FCIdump::write failed to open " << filename << std::endl;
     outputStream.close();
@@ -254,14 +254,14 @@ molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(int& i, int& j, int&
 }
 
 molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(unsigned int& symi,
-                                            size_t& i,
-                                            unsigned int& symj,
-                                            size_t& j,
-                                            unsigned int& symk,
-                                            size_t& k,
-                                            unsigned int& syml,
-                                            size_t& l,
-                                            double& value) const {
+                                                            size_t& i,
+                                                            unsigned int& symj,
+                                                            size_t& j,
+                                                            unsigned int& symk,
+                                                            size_t& k,
+                                                            unsigned int& syml,
+                                                            size_t& l,
+                                                            double& value) const {
   int ii, jj, kk, ll;
   auto result = nextIntegral(ii, jj, kk, ll, value);
   if (result == molpro::FCIdump::endOfFile) return result;
