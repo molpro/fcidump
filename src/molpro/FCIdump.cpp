@@ -294,20 +294,23 @@ molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(unsigned int& symi,
 
 molpro::FCIdump* dump;
 
-void FCIdumpInitialise(char* filename) {
+void FCIdumpInitialise(const char* filename) {
 //  printf("Initialise FCIDUMP from file %s\n",filename);
   dump = new molpro::FCIdump(std::string(filename));
 }
 
 #include <cstring>
-void FCIdumpParameterS(char* key, char* value) {
+void FCIdumpParameterS(const char* key, char* value) {
   std::vector<std::string> vals(1);
   vals[0] = value;
   vals = dump->parameter(std::string(key), vals);
-  if (!vals.empty()) value = strdup(vals[0].c_str());
+  if (!vals.empty()){
+    value = (char*) malloc(vals[0].size()+1);
+    strcpy (value,vals[0].c_str());
+  }
 }
 
-void FCIdumpParameterI(char* key, int* values, int n) {
+void FCIdumpParameterI(const char* key, int* values, int n) {
   std::vector<int> vals(n);
   for (size_t i = 0; i < (size_t) n; i++) vals[i] = values[i];
   vals = dump->parameter(std::string(key), vals);
@@ -315,7 +318,7 @@ void FCIdumpParameterI(char* key, int* values, int n) {
     values[i] = vals[i];
 }
 
-void FCIdumpParameterF(char* key, double* values, int n) {
+void FCIdumpParameterF(const char* key, double* values, int n) {
   std::vector<double> vals(n);
   for (size_t i = 0; i < (size_t) n; i++) vals[i] = values[i];
   vals = dump->parameter(std::string(key), vals);
@@ -339,13 +342,13 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value) {
   return (int) type;
 }
 
-void FCIdumpAddParameterS(char* key, char* value) {
+void FCIdumpAddParameterS(const char* key, const char* value) {
   std::string keys(key);
   std::vector<std::string> valuess(1, value);
   dump->addParameter(keys, valuess);
 }
 
-void FCIdumpAddParameterI(char* key, int values[], int n) {
+void FCIdumpAddParameterI(const char* key, const int values[], int n) {
   std::string keys(key);
   std::vector<int> valuess;
   for (size_t i = 0; i < (size_t) n; i++)
@@ -353,7 +356,7 @@ void FCIdumpAddParameterI(char* key, int values[], int n) {
   dump->addParameter(keys, valuess);
 }
 
-void FCIdumpAddParameterF(char* key, double values[], int n) {
+void FCIdumpAddParameterF(const char* key, const double values[], int n) {
   std::string keys(key);
   std::vector<double> valuess;
   for (size_t i = 0; i < (size_t) n; i++)
@@ -361,7 +364,7 @@ void FCIdumpAddParameterF(char* key, double values[], int n) {
   dump->addParameter(keys, valuess);
 }
 
-int FCIdumpWrite(char* filename, int type) {
+int FCIdumpWrite(const char* filename, int type) {
   return dump->write(std::string(filename), (molpro::FCIdump::fileType) type) ? 1 : 0;
 }
 

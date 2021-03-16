@@ -261,27 +261,27 @@ extern "C" {
  * \brief C binding of FCIdump: initialise access to an FCIDUMP
  * \param filename The file containing the FCIDUMP data
  */
-void FCIdumpInitialise(char* filename);
+void FCIdumpInitialise(const char* filename);
 /*!
  * \brief C binding of FCIdump:  Obtain a string namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
  * \param value  The result as a char* (arrays not supported). If not present in the FCIDUMP, value is not overwritten, i.e. value serves as a default
  */
-void FCIdumpParameterS(char* key, char* value);
+void FCIdumpParameterS(const char* key, char* value);
 /*!
  * \brief C binding of FCIdump:  Obtain an integer namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
  * \param values  The result as a vector of integers. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
  * \param n The length of values
  */
-void FCIdumpParameterI(char* key, int* values, int n);
+void FCIdumpParameterI(const char* key, int* values, int n);
 /*!
  * \brief C binding of FCIdump:  Obtain a floating-point namelist parameter from the FCIDUMP data.
  * \param key The name of the parameter
  * \param values  The result as a vector of doubles. Any elements not present in the FCIDUMP are not overwritten, i.e. values serves as a list of defaults
  * \param n The length of values
  */
-void FCIdumpParameterF(char* key, double* values, int n);
+void FCIdumpParameterF(const char* key, double* values, int n);
 /*!
  * \brief C binding of FCIdump: Position the file so that the next call to FCIdumpNextIntegral will deliver the first integral
  */
@@ -301,28 +301,28 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
  * \param key key
  * \param value value. Note that through this interface only a single string, not an array, can be given
  */
-void FCIdumpAddParameterS(char* key, char* value);
+void FCIdumpAddParameterS(const char* key, const char* value);
 /*!
  * \brief C binding of FCIdump: add a parameter
  * \param key key
  * \param values values
  * \param n length of values
  */
-void FCIdumpAddParameterI(char* key, int values[], int n);
+void FCIdumpAddParameterI(const char* key, const int values[], int n);
 /*!
  * \brief C binding of FCIdump: add a parameter
  * \param key key
  * \param values values
  * \param n length of values
  */
-void FCIdumpAddParameterF(char* key, double values[], int n);
+void FCIdumpAddParameterF(const char* key, const double values[], int n);
 /*!
  * \brief C binding of FCIdump: write the data to an external file
  * \param filename The relative or absolute path name of the file
  * \param type The desired format of the file
  * \return 1 if OK, 0 if not
  */
-int FCIdumpWrite(char* filename, int type);
+int FCIdumpWrite(const char* filename, int type);
 /*!
  * \brief C binding of FCIdump: write an integral to the output stream. FCIdumpWrite() must already have been called.
  * \param i Orbital index
