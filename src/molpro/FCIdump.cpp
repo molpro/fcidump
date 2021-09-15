@@ -1,4 +1,4 @@
-#ifdef MOLPRO
+#ifdef MOLPRO_OBSOLETE
 #include "molpro_config.h"
 #else
 #ifndef _GNU_SOURCE
@@ -11,7 +11,12 @@
 #include <istream>
 #include <sstream>
 #include <stdexcept>
-#define xout std::cout
+#ifdef EXTERN_OSTREAM_COUT
+#define XOUT EXTERN_OSTREAM_COUT
+extern std::ostream& XOUT;
+#else
+#define XOUT std::cout
+#endif
 
 molpro::FCIdump::FCIdump(std::string filename, bool old)
     : _fileName(std::move(filename)), namelistData(",") {
@@ -32,7 +37,7 @@ molpro::FCIdump::FCIdump(std::string filename, bool old)
       namelistData.append(ss);
   }
   namelistData.append(",DUMMY_KEY=,"); // dummy entry at end to simplify parsing
-//  xout <<"namelistData=" <<namelistData <<std::endl;
+//  XOUT <<"namelistData=" <<namelistData <<std::endl;
 }
 
 molpro::FCIdump::FCIdump(std::vector<char> bytestream) {
@@ -91,12 +96,12 @@ std::vector<std::string> molpro::FCIdump::parameter(const std::string& key,
 }
 
 void molpro::FCIdump::addParameter(const std::string& key, const std::vector<std::string>& values) {
-//  xout << "molpro::FCIdump::addParameter namelistData originally "<<namelistData<<std::endl;
+//  XOUT << "molpro::FCIdump::addParameter namelistData originally "<<namelistData<<std::endl;
   namelistData.erase(0, 1);
   for (auto s = values.rbegin(); s != values.rend(); s++)
     namelistData.insert(0, (*s) + ",");
   namelistData.insert(0, "," + key + "=");
-//  xout << "molpro::FCIdump::addParameter namelistData set to "<<namelistData<<std::endl;
+//  XOUT << "molpro::FCIdump::addParameter namelistData set to "<<namelistData<<std::endl;
 }
 void molpro::FCIdump::addParameter(const std::string& key, const std::vector<int>& values) {
   std::vector<std::string> valuess;
@@ -164,7 +169,7 @@ void molpro::FCIdump::rewind() const {
 bool molpro::FCIdump::write(std::string filename, fileType type, bool integrals) {
   outputStream.open((filename == "" ? this->_fileName : filename).c_str());
   if ((outputStream.rdstate() & std::ifstream::failbit) != 0) {
-    xout << "molpro::FCIdump::write failed to open " << filename << std::endl;
+    XOUT << "molpro::FCIdump::write failed to open " << filename << std::endl;
     outputStream.close();
     return false;
   }
@@ -235,21 +240,21 @@ molpro::FCIdump::integralType molpro::FCIdump::nextIntegral(int& i, int& j, int&
   }
   // following is tricky stuff reflecting historical structure of UHF and RHF FCIdump files
   if (i == 0) {
-//    xout << "zero read uhf="<<uhf<<", *currentState="<<*currentState<<std::endl;
+//    XOUT << "zero read uhf="<<uhf<<", *currentState="<<*currentState<<std::endl;
     if (uhf && *currentState != I0) {
       result = endOfRecord;
       currentState++;
-//      xout << "end of Record signalled; *currentState="<<*currentState<<std::endl;
+//      XOUT << "end of Record signalled; *currentState="<<*currentState<<std::endl;
     } else {
-//      xout << "real scalar signalled"<<std::endl;
+//      XOUT << "real scalar signalled"<<std::endl;
       result = I0;
     }
   } else if (k == 0 && (*currentState != molpro::FCIdump::I1a && *currentState != molpro::FCIdump::I1b)) {
-//    xout << "special state switch to "<<*(currentState+1)<<std::endl;
+//    XOUT << "special state switch to "<<*(currentState+1)<<std::endl;
     result = (*currentState == molpro::FCIdump::I2aa) ? molpro::FCIdump::I1a : molpro::FCIdump::endOfRecord;
     ++currentState;
   }
-//  xout << "molpro::FCIdump::nextIntegral i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
+//  XOUT << "molpro::FCIdump::nextIntegral i,j,k,l,value "<<i<<","<<j<<","<<k<<","<<l<<","<<value<<", result="<<result<<std::endl;
   return result;
 }
 
