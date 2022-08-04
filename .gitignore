@@ -15,7 +15,7 @@ testc
 testcpp
 testf
 testc.c
-libFCIdump.a
+*.a
 *.mod
 .idea/
 dependencies/*/

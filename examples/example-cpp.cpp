@@ -1,4 +1,4 @@
-#include "molpro/FCIdump.h"
+#include <molpro/FCIdump.h>
 
 #ifdef __cplusplus
 #include <iostream>

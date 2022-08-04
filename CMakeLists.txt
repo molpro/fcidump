@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(FCIdump C CXX)
+project(fcidump C CXX)
 
 include(FetchContent)
 FetchContent_Declare(
