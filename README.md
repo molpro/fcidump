@@ -7,4 +7,4 @@ Volume 54, Issue 1, April 1989, Pages 75–83,
 [http://bitbucket.org/pjknowles/fci](http://bitbucket.org/pjknowles/fci)),
 as well as [Molpro](http://www.molpro.net) via its fci,dump facility.
 
-Pages describing the API can be found at https://molpro.gitlab.io/fcidump
+Pages describing the API can be found at https://molpro.github.io/fcidump
