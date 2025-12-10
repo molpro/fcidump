@@ -292,16 +292,16 @@ void FCIdumpRewind();
  * \param j orbital label
  * \param k orbital label(zero indicates not 2-electron)
  * \param l orbital label
- * \param value numerical value of the integral
+ * \param valu numerical value of the integral
  * \return indicator of the type of entry (core, 1-electron, 2-electron integrals; end of record; end of file)
  */
-int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value);
+int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* valu);
 /*!
  * \brief C binding of FCIdump: add a parameter
  * \param key key
- * \param value value. Note that through this interface only a single string, not an array, can be given
+ * \param valu value. Note that through this interface only a single string, not an array, can be given
  */
-void FCIdumpAddParameterS(const char* key, const char* value);
+void FCIdumpAddParameterS(const char* key, const char* valu);
 /*!
  * \brief C binding of FCIdump: add a parameter
  * \param key key
@@ -329,9 +329,9 @@ int FCIdumpWrite(const char* filename, int type);
  * \param j Orbital index
  * \param k Orbital index
  * \param l Orbital index
- * \param value The integral
+ * \param valu The integral
  */
-void FCIdumpWriteIntegral(int i, int j, int k, int l, double value);
+void FCIdumpWriteIntegral(int i, int j, int k, int l, double valu);
 #ifdef __cplusplus
 }
 #endif

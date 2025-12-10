@@ -335,7 +335,7 @@ void FCIdumpRewind() {
   dump->rewind();
 }
 
-int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value) {
+int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* valu) {
   int ii, jj, kk, ll;
   double vv;
   molpro::FCIdump::integralType type = dump->nextIntegral(ii, jj, kk, ll, vv);
@@ -343,13 +343,13 @@ int FCIdumpNextIntegral(int* i, int* j, int* k, int* l, double* value) {
   *j = jj;
   *k = kk;
   *l = ll;
-  *value = vv;
+  *valu = vv;
   return (int) type;
 }
 
-void FCIdumpAddParameterS(const char* key, const char* value) {
+void FCIdumpAddParameterS(const char* key, const char* valu) {
   std::string keys(key);
-  std::vector<std::string> valuess(1, value);
+  std::vector<std::string> valuess(1, valu);
   dump->addParameter(keys, valuess);
 }
 
@@ -373,6 +373,6 @@ int FCIdumpWrite(const char* filename, int type) {
   return dump->write(std::string(filename), (molpro::FCIdump::fileType) type) ? 1 : 0;
 }
 
-void FCIdumpWriteIntegral(int i, int j, int k, int l, double value) {
-  dump->writeIntegral(i, j, k, l, value);
+void FCIdumpWriteIntegral(int i, int j, int k, int l, double valu) {
+  dump->writeIntegral(i, j, k, l, valu);
 }

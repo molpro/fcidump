@@ -5,41 +5,41 @@ MODULE FCIdumpF
  INTERFACE
   SUBROUTINE FCIdumpInitialiseC(filename) BIND(C,name="FCIdumpInitialise")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: filename
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: filename
   END SUBROUTINE FCIdumpInitialiseC
   SUBROUTINE FCIdumpParameterS(key, values, n) BIND(C,name="FCIdumpParameterS")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
    CHARACTER(kind=C_CHAR), DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterS
   SUBROUTINE FCIdumpParameterI(key, values, n) BIND(C,name="FCIdumpParameterI")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
    INTEGER(kind=C_INT), DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterI
   SUBROUTINE FCIdumpParameterF(key, values, n) BIND(C,name="FCIdumpParameterF")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT, C_DOUBLE
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
    REAL(kind=C_DOUBLE), DIMENSION(*) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterF
   SUBROUTINE FCIdumpAddParameterS(key, valu) BIND(C,name="FCIdumpAddParameterS")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: valu
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: valu
   END SUBROUTINE FCIdumpAddParameterS
   SUBROUTINE FCIdumpAddParameterI(key, values, n) BIND(C,name="FCIdumpAddParameterI")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
-   INTEGER(kind=C_INT), DIMENSION(*) :: values
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
+   INTEGER(kind=C_INT), DIMENSION(*), INTENT(IN) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpAddParameterI
   SUBROUTINE FCIdumpAddParameterF(key, values, n) BIND(C,name="FCIdumpAddParameterF")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT, C_DOUBLE
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: key
-   REAL(kind=C_DOUBLE), DIMENSION(*) :: values
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
+   REAL(kind=C_DOUBLE), DIMENSION(*), INTENT(IN) :: values
    INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpAddParameterF
   SUBROUTINE FCIdumpRewindC() BIND(C,name="FCIdumpRewind")
@@ -53,7 +53,7 @@ MODULE FCIdumpF
   FUNCTION FCIdumpWrite(filename, typc) BIND(C,name="FCIdumpWrite")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
    INTEGER(kind=C_INT) :: FCIdumpWrite
-   CHARACTER(kind=C_CHAR), DIMENSION(*) :: filename
+   CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: filename
    INTEGER(kind=C_INT) :: typc
   END FUNCTION FCIdumpWrite
   SUBROUTINE FCIdumpWriteIntegralC(i, j, k, l, valu) BIND(C,name="FCIdumpWriteIntegral")
