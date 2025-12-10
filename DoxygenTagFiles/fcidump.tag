@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.1">
+<tagfile doxygen_version="1.9.8">
   <compound kind="file">
     <name>LICENCE.md</name>
     <path>/__w/fcidump/fcidump/</path>
@@ -14,7 +14,7 @@
     <name>FCIdump.cpp</name>
     <path>/__w/fcidump/fcidump/src/molpro/</path>
     <filename>FCIdump_8cpp.html</filename>
-    <includes id="FCIdump_8h" name="FCIdump.h" local="yes" imported="no">molpro/FCIdump.h</includes>
+    <includes id="FCIdump_8h" name="FCIdump.h" local="yes" import="no" module="no" objc="no">molpro/FCIdump.h</includes>
     <member kind="define">
       <type>#define</type>
       <name>_GNU_SOURCE</name>
@@ -68,15 +68,15 @@
       <type>int</type>
       <name>FCIdumpNextIntegral</name>
       <anchorfile>FCIdump_8cpp.html</anchorfile>
-      <anchor>af14c2a0c504afcbe2d4b91903826cf90</anchor>
-      <arglist>(int *i, int *j, int *k, int *l, double *value)</arglist>
+      <anchor>a0e5324142d94c79a7d15ba171fca62bf</anchor>
+      <arglist>(int *i, int *j, int *k, int *l, double *valu)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>FCIdumpAddParameterS</name>
       <anchorfile>FCIdump_8cpp.html</anchorfile>
-      <anchor>a8a4f56a6a646111215983bd9a401bd2f</anchor>
-      <arglist>(const char *key, const char *value)</arglist>
+      <anchor>a7ffd3751016d6ec67bb3ef9689fcca58</anchor>
+      <arglist>(const char *key, const char *valu)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -103,8 +103,8 @@
       <type>void</type>
       <name>FCIdumpWriteIntegral</name>
       <anchorfile>FCIdump_8cpp.html</anchorfile>
-      <anchor>a2696f3dd51db67feedb1a91f529147ed</anchor>
-      <arglist>(int i, int j, int k, int l, double value)</arglist>
+      <anchor>a89fad2dfa1e2eb7ac885881efb6a6ffe</anchor>
+      <arglist>(int i, int j, int k, int l, double valu)</arglist>
     </member>
     <member kind="variable">
       <type>molpro::FCIdump *</type>
@@ -159,15 +159,15 @@
       <type>int</type>
       <name>FCIdumpNextIntegral</name>
       <anchorfile>FCIdump_8h.html</anchorfile>
-      <anchor>af14c2a0c504afcbe2d4b91903826cf90</anchor>
-      <arglist>(int *i, int *j, int *k, int *l, double *value)</arglist>
+      <anchor>a0e5324142d94c79a7d15ba171fca62bf</anchor>
+      <arglist>(int *i, int *j, int *k, int *l, double *valu)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>FCIdumpAddParameterS</name>
       <anchorfile>FCIdump_8h.html</anchorfile>
-      <anchor>a8a4f56a6a646111215983bd9a401bd2f</anchor>
-      <arglist>(const char *key, const char *value)</arglist>
+      <anchor>a7ffd3751016d6ec67bb3ef9689fcca58</anchor>
+      <arglist>(const char *key, const char *valu)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -194,103 +194,26 @@
       <type>void</type>
       <name>FCIdumpWriteIntegral</name>
       <anchorfile>FCIdump_8h.html</anchorfile>
-      <anchor>a2696f3dd51db67feedb1a91f529147ed</anchor>
-      <arglist>(int i, int j, int k, int l, double value)</arglist>
+      <anchor>a89fad2dfa1e2eb7ac885881efb6a6ffe</anchor>
+      <arglist>(int i, int j, int k, int l, double valu)</arglist>
     </member>
   </compound>
   <compound kind="file">
     <name>FCIdumpF.F90</name>
     <path>/__w/fcidump/fcidump/src/molpro/</path>
     <filename>FCIdumpF_8F90.html</filename>
-    <class kind="interface">fcidumpf::FCIdumpInitialiseC</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterS</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterI</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterF</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterS</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterI</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterF</class>
-    <class kind="interface">fcidumpf::FCIdumpRewindC</class>
-    <class kind="interface">fcidumpf::FCIdumpFNextIntegralC</class>
-    <class kind="interface">fcidumpf::FCIdumpWrite</class>
-    <class kind="interface">fcidumpf::FCIdumpWriteIntegralC</class>
+    <class kind="interface">fcidumpf::fcidumpinitialisec</class>
+    <class kind="interface">fcidumpf::fcidumpparameters</class>
+    <class kind="interface">fcidumpf::fcidumpparameteri</class>
+    <class kind="interface">fcidumpf::fcidumpparameterf</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameters</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameteri</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameterf</class>
+    <class kind="interface">fcidumpf::fcidumprewindc</class>
+    <class kind="interface">fcidumpf::fcidumpfnextintegralc</class>
+    <class kind="interface">fcidumpf::fcidumpwrite</class>
+    <class kind="interface">fcidumpf::fcidumpwriteintegralc</class>
     <namespace>fcidumpf</namespace>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfinitialise</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>ad42588e7e3a1e20316e8238ab1df1b42</anchor>
-      <arglist>(filename)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfparameters</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>a39b4df15ef4fb5057ec0b30d868ce2b6</anchor>
-      <arglist>(key, valu)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfparameteri</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>ace07ef64e12d317c1131b1d929385ff8</anchor>
-      <arglist>(key, values)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfparameterf</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>a56cb5a9f50d6f9c445d4cad28a07cc03</anchor>
-      <arglist>(key, values)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfrewind</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>acaef90a752bd43a7cbeee437407f56d7</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>integer function</type>
-      <name>fcidumpfnextintegral</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>a8af8363618c72b1cbec8a400d7c57bf1</anchor>
-      <arglist>(i, j, k, l, valu)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfaddparameters</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>a56686b9493c58da49773623e9ea2e777</anchor>
-      <arglist>(key, valu)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfaddparameteri</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>ae46c994cb043cba1988db63de548c32d</anchor>
-      <arglist>(key, values)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfaddparameterf</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>af97e30ca77e9c4cf2d9ef3e940697d95</anchor>
-      <arglist>(key, values)</arglist>
-    </member>
-    <member kind="function">
-      <type>logical function</type>
-      <name>fcidumpfwrite</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>afa76474ed31bb347c7a397dc29df7c19</anchor>
-      <arglist>(filename, typf)</arglist>
-    </member>
-    <member kind="function">
-      <type>subroutine</type>
-      <name>fcidumpfwriteintegral</name>
-      <anchorfile>namespacefcidumpf.html</anchorfile>
-      <anchor>aa453658f38bcd858455876ef7eae1f6a</anchor>
-      <arglist>(i, j, k, l, valu)</arglist>
-    </member>
   </compound>
   <compound kind="class">
     <name>molpro::FCIdump</name>
@@ -587,140 +510,140 @@
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpAddParameterF</name>
-    <filename>interfacefcidumpf_1_1FCIdumpAddParameterF.html</filename>
+    <name>fcidumpf::fcidumpaddparameterf</name>
+    <filename>interfacefcidumpf_1_1fcidumpaddparameterf.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpaddparameterf</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpAddParameterF.html</anchorfile>
-      <anchor>af4ec80a92f2e1953ef11257f8c7f56fc</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpaddparameterf.html</anchorfile>
+      <anchor>a8c713151f7fd0dd0116eb3b173eec058</anchor>
       <arglist>(key, values, n)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpAddParameterI</name>
-    <filename>interfacefcidumpf_1_1FCIdumpAddParameterI.html</filename>
+    <name>fcidumpf::fcidumpaddparameteri</name>
+    <filename>interfacefcidumpf_1_1fcidumpaddparameteri.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpaddparameteri</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpAddParameterI.html</anchorfile>
-      <anchor>a765760d703a17c39127e9a5c86a1e594</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpaddparameteri.html</anchorfile>
+      <anchor>a05c353d5f680e7d8f5497f2505853ac8</anchor>
       <arglist>(key, values, n)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpAddParameterS</name>
-    <filename>interfacefcidumpf_1_1FCIdumpAddParameterS.html</filename>
+    <name>fcidumpf::fcidumpaddparameters</name>
+    <filename>interfacefcidumpf_1_1fcidumpaddparameters.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpaddparameters</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpAddParameterS.html</anchorfile>
-      <anchor>af50e7d32aca1f544801fb29db6914e6a</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpaddparameters.html</anchorfile>
+      <anchor>a3c06c90798162b96fb2e745f81584306</anchor>
       <arglist>(key, valu)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpFNextIntegralC</name>
-    <filename>interfacefcidumpf_1_1FCIdumpFNextIntegralC.html</filename>
+    <name>fcidumpf::fcidumpfnextintegralc</name>
+    <filename>interfacefcidumpf_1_1fcidumpfnextintegralc.html</filename>
     <member kind="function">
       <type>integer(kind=c_int) function</type>
       <name>fcidumpfnextintegralc</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpFNextIntegralC.html</anchorfile>
-      <anchor>a77a6dc59b2e3a9063bacf209e1905d7f</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpfnextintegralc.html</anchorfile>
+      <anchor>afe6666a7c84e2d9a534fbc43c815c688</anchor>
       <arglist>(i, j, k, l, valu)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpInitialiseC</name>
-    <filename>interfacefcidumpf_1_1FCIdumpInitialiseC.html</filename>
+    <name>fcidumpf::fcidumpinitialisec</name>
+    <filename>interfacefcidumpf_1_1fcidumpinitialisec.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpinitialisec</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpInitialiseC.html</anchorfile>
-      <anchor>a4a87969b9066d6ff5454b822f3a1e159</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpinitialisec.html</anchorfile>
+      <anchor>a69cd700013d060f446c2495f1ba376e9</anchor>
       <arglist>(filename)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpParameterF</name>
-    <filename>interfacefcidumpf_1_1FCIdumpParameterF.html</filename>
+    <name>fcidumpf::fcidumpparameterf</name>
+    <filename>interfacefcidumpf_1_1fcidumpparameterf.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpparameterf</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpParameterF.html</anchorfile>
-      <anchor>af449ea94f4b60a5770736dfa626d9713</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpparameterf.html</anchorfile>
+      <anchor>a9ad936739c956cfa408522988ab5637f</anchor>
       <arglist>(key, values, n)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpParameterI</name>
-    <filename>interfacefcidumpf_1_1FCIdumpParameterI.html</filename>
+    <name>fcidumpf::fcidumpparameteri</name>
+    <filename>interfacefcidumpf_1_1fcidumpparameteri.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpparameteri</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpParameterI.html</anchorfile>
-      <anchor>aff2e54dcecd82c6faa42a90ac15eb5ef</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpparameteri.html</anchorfile>
+      <anchor>a69d76fc9948a94a8dc3cac97e35c951a</anchor>
       <arglist>(key, values, n)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpParameterS</name>
-    <filename>interfacefcidumpf_1_1FCIdumpParameterS.html</filename>
+    <name>fcidumpf::fcidumpparameters</name>
+    <filename>interfacefcidumpf_1_1fcidumpparameters.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpparameters</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpParameterS.html</anchorfile>
-      <anchor>a88ef2d3971d8c1b76846853416c55f99</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpparameters.html</anchorfile>
+      <anchor>a030dc51849c9e84131d6f7d2cec7e32f</anchor>
       <arglist>(key, values, n)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpRewindC</name>
-    <filename>interfacefcidumpf_1_1FCIdumpRewindC.html</filename>
+    <name>fcidumpf::fcidumprewindc</name>
+    <filename>interfacefcidumpf_1_1fcidumprewindc.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumprewindc</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpRewindC.html</anchorfile>
-      <anchor>a444815c303960c6942503d19a13b869e</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumprewindc.html</anchorfile>
+      <anchor>a60ab0baf38bc7109de05f8fc7a286c8b</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpWrite</name>
-    <filename>interfacefcidumpf_1_1FCIdumpWrite.html</filename>
+    <name>fcidumpf::fcidumpwrite</name>
+    <filename>interfacefcidumpf_1_1fcidumpwrite.html</filename>
     <member kind="function">
       <type>integer(kind=c_int) function</type>
       <name>fcidumpwrite</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpWrite.html</anchorfile>
-      <anchor>ac385813f2f0b401710ee03cbe9bdc837</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpwrite.html</anchorfile>
+      <anchor>a64a2def92b545791b41c52eded33f583</anchor>
       <arglist>(filename, typc)</arglist>
     </member>
   </compound>
   <compound kind="interface">
-    <name>fcidumpf::FCIdumpWriteIntegralC</name>
-    <filename>interfacefcidumpf_1_1FCIdumpWriteIntegralC.html</filename>
+    <name>fcidumpf::fcidumpwriteintegralc</name>
+    <filename>interfacefcidumpf_1_1fcidumpwriteintegralc.html</filename>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpwriteintegralc</name>
-      <anchorfile>interfacefcidumpf_1_1FCIdumpWriteIntegralC.html</anchorfile>
-      <anchor>a9499cf1708b1f74f36b74c599ec00da9</anchor>
+      <anchorfile>interfacefcidumpf_1_1fcidumpwriteintegralc.html</anchorfile>
+      <anchor>a4110c89892307f7c743b8a9f894f0877</anchor>
       <arglist>(i, j, k, l, valu)</arglist>
     </member>
   </compound>
   <compound kind="namespace">
     <name>fcidumpf</name>
     <filename>namespacefcidumpf.html</filename>
-    <class kind="interface">fcidumpf::FCIdumpInitialiseC</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterS</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterI</class>
-    <class kind="interface">fcidumpf::FCIdumpParameterF</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterS</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterI</class>
-    <class kind="interface">fcidumpf::FCIdumpAddParameterF</class>
-    <class kind="interface">fcidumpf::FCIdumpRewindC</class>
-    <class kind="interface">fcidumpf::FCIdumpFNextIntegralC</class>
-    <class kind="interface">fcidumpf::FCIdumpWrite</class>
-    <class kind="interface">fcidumpf::FCIdumpWriteIntegralC</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameterf</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameteri</class>
+    <class kind="interface">fcidumpf::fcidumpaddparameters</class>
+    <class kind="interface">fcidumpf::fcidumpfnextintegralc</class>
+    <class kind="interface">fcidumpf::fcidumpinitialisec</class>
+    <class kind="interface">fcidumpf::fcidumpparameterf</class>
+    <class kind="interface">fcidumpf::fcidumpparameteri</class>
+    <class kind="interface">fcidumpf::fcidumpparameters</class>
+    <class kind="interface">fcidumpf::fcidumprewindc</class>
+    <class kind="interface">fcidumpf::fcidumpwrite</class>
+    <class kind="interface">fcidumpf::fcidumpwriteintegralc</class>
     <member kind="function">
       <type>subroutine</type>
       <name>fcidumpfinitialise</name>
@@ -806,14 +729,14 @@
     <docanchor file="namespacemolpro.html">Introduction</docanchor>
   </compound>
   <compound kind="page">
-    <name>md____w_fcidump_fcidump_LICENCE</name>
+    <name>md__2____w_2fcidump_2fcidump_2LICENCE</name>
     <title>LICENCE</title>
-    <filename>md____w_fcidump_fcidump_LICENCE.html</filename>
+    <filename>md__2____w_2fcidump_2fcidump_2LICENCE.html</filename>
   </compound>
   <compound kind="page">
     <name>index</name>
     <title>FCIdump</title>
     <filename>index.html</filename>
-    <docanchor file="index.html">md____w_fcidump_fcidump_README</docanchor>
+    <docanchor file="index.html" title="FCIdump">md__2____w_2fcidump_2fcidump_2README</docanchor>
   </compound>
 </tagfile>
