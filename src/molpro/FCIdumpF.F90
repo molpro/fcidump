@@ -7,11 +7,10 @@ MODULE FCIdumpF
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR
    CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: filename
   END SUBROUTINE FCIdumpInitialiseC
-  SUBROUTINE FCIdumpParameterS(key, values, n) BIND(C,name="FCIdumpParameterS")
+  SUBROUTINE FCIdumpParameterS(key, values) BIND(C,name="FCIdumpParameterS")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
    CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: key
    CHARACTER(kind=C_CHAR), DIMENSION(*) :: values
-   INTEGER(kind=C_INT), VALUE :: n
   END SUBROUTINE FCIdumpParameterS
   SUBROUTINE FCIdumpParameterI(key, values, n) BIND(C,name="FCIdumpParameterI")
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
@@ -54,7 +53,7 @@ MODULE FCIdumpF
    USE iso_c_binding, ONLY: C_CHAR, C_NULL_CHAR, C_INT
    INTEGER(kind=C_INT) :: FCIdumpWrite
    CHARACTER(kind=C_CHAR), DIMENSION(*), INTENT(IN) :: filename
-   INTEGER(kind=C_INT) :: typc
+   INTEGER(kind=C_INT), VALUE :: typc
   END FUNCTION FCIdumpWrite
   SUBROUTINE FCIdumpWriteIntegralC(i, j, k, l, valu) BIND(C,name="FCIdumpWriteIntegral")
    USE iso_c_binding, ONLY:  C_INT, C_DOUBLE
@@ -83,7 +82,7 @@ CONTAINS
   INTEGER :: i
   c_key=TRIM(key)//C_NULL_CHAR
   c_values = TRIM(valu)//C_NULL_CHAR
-  CALL FCIDumpParameterS(c_key,c_values,INT(1,kind=C_INT));
+  CALL FCIDumpParameterS(c_key,c_values);
   DO i=1,LEN(valu)
    IF (c_values(i:i) .EQ. C_NULL_CHAR) EXIT
    valu(i:i) = c_values(i:i)

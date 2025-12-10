@@ -369,8 +369,8 @@ void FCIdumpAddParameterF(const char* key, const double values[], int n) {
   dump->addParameter(keys, valuess);
 }
 
-int FCIdumpWrite(const char* filename, int type) {
-  return dump->write(std::string(filename), (molpro::FCIdump::fileType) type) ? 1 : 0;
+int FCIdumpWrite(const char* filename, int typc) {
+  return dump->write(std::string(filename), (molpro::FCIdump::fileType) typc) ? 1 : 0;
 }
 
 void FCIdumpWriteIntegral(int i, int j, int k, int l, double valu) {

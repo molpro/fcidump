@@ -319,10 +319,10 @@ void FCIdumpAddParameterF(const char* key, const double values[], int n);
 /*!
  * \brief C binding of FCIdump: write the data to an external file
  * \param filename The relative or absolute path name of the file
- * \param type The desired format of the file
+ * \param typc The desired format of the file
  * \return 1 if OK, 0 if not
  */
-int FCIdumpWrite(const char* filename, int type);
+int FCIdumpWrite(const char* filename, int typc);
 /*!
  * \brief C binding of FCIdump: write an integral to the output stream. FCIdumpWrite() must already have been called.
  * \param i Orbital index
