@@ -153,11 +153,11 @@ Functions</h2></td></tr>
 <tr class="memitem:aed7e77fc694bdcb998afcef9d4dc9dd7" id="r_aed7e77fc694bdcb998afcef9d4dc9dd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FCIdump_8h.html#aed7e77fc694bdcb998afcef9d4dc9dd7">FCIdumpAddParameterF</a> (const char *key, const double values[], int n)</td></tr>
 <tr class="memdesc:aed7e77fc694bdcb998afcef9d4dc9dd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">C binding of FCIdump: add a parameter.  <br /></td></tr>
 <tr class="separator:aed7e77fc694bdcb998afcef9d4dc9dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a557060ecee3cf551660ceb1d143f4b23" id="r_a557060ecee3cf551660ceb1d143f4b23"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FCIdump_8h.html#a557060ecee3cf551660ceb1d143f4b23">FCIdumpWrite</a> (const char *filename, int type)</td></tr>
-<tr class="memdesc:a557060ecee3cf551660ceb1d143f4b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">C binding of FCIdump: write the data to an external file.  <br /></td></tr>
-<tr class="separator:a557060ecee3cf551660ceb1d143f4b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca3c4e687ec2a5545b69a9a79de96ae" id="r_a6ca3c4e687ec2a5545b69a9a79de96ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FCIdump_8h.html#a6ca3c4e687ec2a5545b69a9a79de96ae">FCIdumpWrite</a> (const char *filename, int typc)</td></tr>
+<tr class="memdesc:a6ca3c4e687ec2a5545b69a9a79de96ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">C binding of FCIdump: write the data to an external file.  <br /></td></tr>
+<tr class="separator:a6ca3c4e687ec2a5545b69a9a79de96ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89fad2dfa1e2eb7ac885881efb6a6ffe" id="r_a89fad2dfa1e2eb7ac885881efb6a6ffe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="FCIdump_8h.html#a89fad2dfa1e2eb7ac885881efb6a6ffe">FCIdumpWriteIntegral</a> (int i, int j, int k, int l, double valu)</td></tr>
-<tr class="memdesc:a89fad2dfa1e2eb7ac885881efb6a6ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">C binding of FCIdump: write an integral to the output stream. <a class="el" href="FCIdump_8h.html#a557060ecee3cf551660ceb1d143f4b23" title="C binding of FCIdump: write the data to an external file.">FCIdumpWrite()</a> must already have been called.  <br /></td></tr>
+<tr class="memdesc:a89fad2dfa1e2eb7ac885881efb6a6ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">C binding of FCIdump: write an integral to the output stream. <a class="el" href="FCIdump_8h.html#a6ca3c4e687ec2a5545b69a9a79de96ae" title="C binding of FCIdump: write the data to an external file.">FCIdumpWrite()</a> must already have been called.  <br /></td></tr>
 <tr class="separator:a89fad2dfa1e2eb7ac885881efb6a6ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -515,8 +515,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a557060ecee3cf551660ceb1d143f4b23" name="a557060ecee3cf551660ceb1d143f4b23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a557060ecee3cf551660ceb1d143f4b23">&#9670;&#160;</a></span>FCIdumpWrite()</h2>
+<a id="a6ca3c4e687ec2a5545b69a9a79de96ae" name="a6ca3c4e687ec2a5545b69a9a79de96ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca3c4e687ec2a5545b69a9a79de96ae">&#9670;&#160;</a></span>FCIdumpWrite()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -531,7 +531,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>typc</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -545,7 +545,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>The relative or absolute path name of the file </td></tr>
-    <tr><td class="paramname">type</td><td>The desired format of the file </td></tr>
+    <tr><td class="paramname">typc</td><td>The desired format of the file </td></tr>
   </table>
   </dd>
 </dl>
@@ -597,7 +597,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>C binding of FCIdump: write an integral to the output stream. <a class="el" href="FCIdump_8h.html#a557060ecee3cf551660ceb1d143f4b23" title="C binding of FCIdump: write the data to an external file.">FCIdumpWrite()</a> must already have been called. </p>
+<p>C binding of FCIdump: write an integral to the output stream. <a class="el" href="FCIdump_8h.html#a6ca3c4e687ec2a5545b69a9a79de96ae" title="C binding of FCIdump: write the data to an external file.">FCIdumpWrite()</a> must already have been called. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>Orbital index </td></tr>

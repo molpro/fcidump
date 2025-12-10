@@ -96,8 +96,8 @@
       <type>int</type>
       <name>FCIdumpWrite</name>
       <anchorfile>FCIdump_8cpp.html</anchorfile>
-      <anchor>a557060ecee3cf551660ceb1d143f4b23</anchor>
-      <arglist>(const char *filename, int type)</arglist>
+      <anchor>a6ca3c4e687ec2a5545b69a9a79de96ae</anchor>
+      <arglist>(const char *filename, int typc)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -187,8 +187,8 @@
       <type>int</type>
       <name>FCIdumpWrite</name>
       <anchorfile>FCIdump_8h.html</anchorfile>
-      <anchor>a557060ecee3cf551660ceb1d143f4b23</anchor>
-      <arglist>(const char *filename, int type)</arglist>
+      <anchor>a6ca3c4e687ec2a5545b69a9a79de96ae</anchor>
+      <arglist>(const char *filename, int typc)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -593,8 +593,8 @@
       <type>subroutine</type>
       <name>fcidumpparameters</name>
       <anchorfile>interfacefcidumpf_1_1fcidumpparameters.html</anchorfile>
-      <anchor>a030dc51849c9e84131d6f7d2cec7e32f</anchor>
-      <arglist>(key, values, n)</arglist>
+      <anchor>a72a5dfc0965339defa54d8e47fff6f84</anchor>
+      <arglist>(key, values)</arglist>
     </member>
   </compound>
   <compound kind="interface">
